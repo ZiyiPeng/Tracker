@@ -7,10 +7,6 @@ defmodule Stockproject.Portfolios.Portfolio do
     belongs_to :user, Stockproject.Users.User
     has_many :records, Stockproject.Records.Record
 
-    many_to_many :stocks, Stockproject.Stocks.Stock,
-    join_through: "stock_portfolio",
-    join_keys: [portfolio_id: :id, stock_id: :id],
-    on_replace: :delete
     timestamps()
   end
 
