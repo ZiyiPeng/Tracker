@@ -19,10 +19,13 @@ defmodule Stockproject.Users do
   """
   def list_users do
     Repo.all(User)
+    |> preload([:portfolio])
   end
 
   def get_user_by_name(name) do
-    Repo.get_by(User, name: name);
+    Repo.one from p in User,
+      where: p.name == ^name,
+      preload: [:portfolio]
   end
 
   def authenticate_user(name, password) do
@@ -53,6 +56,12 @@ defmodule Stockproject.Users do
 
   """
   def get_user!(id), do: Repo.get!(User, id)
+
+  def get_user(id) do
+    Repo.one from p in User,
+      where: p.id == ^id,
+      preload: [:portfolio]
+  end
 
   @doc """
   Creates a user.

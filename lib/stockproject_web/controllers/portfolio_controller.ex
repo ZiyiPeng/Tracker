@@ -21,7 +21,7 @@ defmodule StockprojectWeb.PortfolioController do
   end
 
   def show(conn, %{"id" => id}) do
-    portfolio = Portfolios.get_portfolio!(id)
+    portfolio = Portfolios.get_portfolio(id)
     render(conn, "show.json", portfolio: portfolio)
   end
 

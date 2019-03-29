@@ -10,19 +10,13 @@ defmodule Stockproject.Stocks.Stock do
     field :beta, :float
     field :rate_of_return, :float
 
-    many_to_many :portfolio, Stockproject.Portfolios.Portfolio,
-    join_through: "stock_portfolio",
-    join_keys: [stock_id: :id, portfolio_id: :id],
-    on_replace: :delete
-
-
     timestamps()
   end
 
   @doc false
   def changeset(stock, attrs) do
     stock
-    |> cast(attrs, [:name, :abbreviation, :risk, :modified_date])
+    |> cast(attrs, [:name, :abbreviation, :risk, :modified_date, :beta, :rate_of_return])
     |> validate_required([:name, :abbreviation, :risk, :modified_date])
   end
 end

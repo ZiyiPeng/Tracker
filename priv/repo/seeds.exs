@@ -10,13 +10,17 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 alias Stockproject.Portfolios.Portfolio
-alias Stockproject.Portfolios
 alias Stockproject.Stocks.Stock
-alias Stockproject.Stocks
 alias Stockproject.Users.User
-alias Stockproject.Users
-
+alias Stockproject.Records.Record
+alias Stockproject.Repo
+time = DateTime.utc_now
+time = DateTime.truncate(time, :second)
 pwhash = Argon2.hash_pwd_salt("P@ssw0rd")
-peng = %User{username: "peng", password: pwhash}
-s1 = %Stock{abbreviation: "APPL", modified_date: DateTime.utc(), name: "apple", risk: 5.25, beta: 2.56, rate_of_return: 5.65}
-#p1 = %Portfolio{name: "p1", user: peng}
+peng = Repo.insert!(%User{name: "peng", password_hash: pwhash})
+p1 = Repo.insert!(%Portfolio{name: "p1", user: peng})
+IO.inspect(p1)
+s1 = Repo.insert!(%Stock{abbreviation: "APPL", modified_date: time, name: "apple", risk: 5.25, beta: 2.56, rate_of_return: 5.65})
+IO.inspect(s1)
+r1=Repo.insert!(%Record{amount: 10.01, quantity: 10, purchased_price: 1.01, stock_id: 1, portfolio: p1})
+IO.inspect(r1)

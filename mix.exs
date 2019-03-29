@@ -46,6 +46,7 @@ defmodule Stockproject.MixProject do
       {:distillery, "~> 2.0"},
       {:argon2_elixir, "~> 1.3"},
       {:comeonin, "~> 4.1"},
+      {:stoxir, "~> 0.1.1"},
     ]
   end
 

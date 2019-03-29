@@ -4,7 +4,7 @@ defmodule Stockproject.Users.User do
 
   schema "users" do
     field :password_hash, :string
-    field :username, :string
+    field :name, :string
     has_one :portfolio, Stockproject.Portfolios.Portfolio
     timestamps()
   end

@@ -15,7 +15,10 @@ defmodule StockprojectWeb.Router do
 
   scope "/", StockprojectWeb do
     pipe_through :browser
-
+    resources "/stocks", StockController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/portfolio", PortfolioController, except: [:new, :edit]
+    resources "/records", RecordController, except: [:new, :edit]
     get "/", PageController, :index
   end
 

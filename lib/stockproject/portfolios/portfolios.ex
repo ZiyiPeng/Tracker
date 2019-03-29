@@ -18,7 +18,7 @@ defmodule Stockproject.Portfolios do
 
   """
   def list_portfolio do
-    Repo.all(Portfolio)
+    Repo.all(from p in Portfolio, preload: [:user, :records])
   end
 
   @doc """
@@ -37,6 +37,18 @@ defmodule Stockproject.Portfolios do
   """
   def get_portfolio!(id), do: Repo.get!(Portfolio, id)
 
+  def get_portfolio(id) do
+    Repo.one from p in Portfolio,
+      where: p.id == ^id,
+      preload: [:user, :records]
+  end
+
+  def get_portfolio_by_username(username) do
+    user_id = Stockproject.Users.get_user_by_name(username).id
+    Repo.one(from p in Portfolio,
+    where: p.user_id == ^user_id,
+      preload: [:user, :records])
+  end
   @doc """
   Creates a portfolio.
 

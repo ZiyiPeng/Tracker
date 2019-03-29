@@ -13,7 +13,7 @@ defmodule Stockproject.Portfolios.Portfolio do
   @doc false
   def changeset(portfolio, attrs) do
     portfolio
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :user_id])
     |> validate_required([:name])
   end
 end
