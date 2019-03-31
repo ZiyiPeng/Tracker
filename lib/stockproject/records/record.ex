@@ -14,6 +14,7 @@ defmodule Stockproject.Records.Record do
 
   @doc false
   def changeset(record, attrs) do
+    IO.inspect(attrs)
     record
     |> cast(attrs, [:amount, :quantity, :purchased_price, :stock_id])
     |> validate_required([:amount, :quantity, :purchased_price])

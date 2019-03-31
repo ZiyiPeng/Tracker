@@ -15,6 +15,24 @@ defmodule StockprojectWeb.StockView do
       name: stock.name,
       abbreviation: stock.abbreviation,
       risk: stock.risk,
+      rate_of_return: stock.rate_of_return,
+      beta: stock.beta,
       modified_date: stock.modified_date}
   end
+
+#return company financial information
+  def render("company.json", %{company: company}) do
+    %{ ceo: company.ceo,
+       company_name: company.company_name,
+       description: company.description,
+       sector: company.sector,
+       symbol: company.symbol,
+       website: company.website }
+  end
+
+  def render("stock_history.json", %{data: data}) do
+    histories = Enum.map(data, fn x -> %{price: x.close, date: x.date} end)
+    %{history: histories}
+  end
+
 end

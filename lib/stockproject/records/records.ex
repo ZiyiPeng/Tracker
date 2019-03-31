@@ -37,6 +37,11 @@ defmodule Stockproject.Records do
   """
   def get_record!(id), do: Repo.get!(Record, id)
 
+  def get_record(id) do
+    Repo.one from r in Record,
+      where: r.id == ^id
+  end
+
   @doc """
   Creates a record.
 
@@ -50,9 +55,15 @@ defmodule Stockproject.Records do
 
   """
   def create_record(attrs \\ %{}) do
+    portfolio = Stockproject.Portfolios.get_portfolio(attrs["portfolio_id"])
+
     %Record{}
     |> Record.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert!
+    |> Repo.preload([:portfolio])
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_assoc(:portfolio, portfolio)
+    |> Repo.update
   end
 
   @doc """
@@ -101,4 +112,39 @@ defmodule Stockproject.Records do
   def change_record(%Record{} = record) do
     Record.changeset(record, %{})
   end
+
+  def calc_current_value(id) do
+    record = get_record(id)
+    stock = Stockproject.Stocks.get_stock(record.stock_id)
+    price = StockUtil.get_current_price(stock.abbreviation)
+    price * record.quantity
+  end
+
+  #%{abbrev, risk, beta, ror}
+  def calc_weighted_stats(record_id, total) do
+    record = get_record(record_id)
+    stock = Stockproject.Stocks.get_stock!(record.stock_id)
+    weight = record.amount / total
+    risk = stock.risk * weight
+    beta = stock.beta * weight
+    ror = stock.rate_of_return * weight
+    %{abbreviation: stock.abbreviation, risk: risk, beta: beta, ror: ror, weight: weight}
+  end
+
+  def calc_weight_in_portfolio(record_id, total) do
+    record = get_record(record_id)
+    stock = Stockproject.Stocks.get_stock!(record.stock_id)
+    weight = record.amount / total
+    %{abbreviation: stock.abbreviation, weight: weight}
+  end
+
+  def get_historical_value(record_id) do
+    record = get_record(record_id)
+    stock = Stockproject.Stocks.get_stock!(record.stock_id)
+    history = StockUtil.get_history(stock.abbreviation, "1y")
+    #IO.inspect(history)
+    Enum.map(history, fn x -> %{"date": x.date, "value": x.close * record.quantity} end)
+  end
+
+
 end

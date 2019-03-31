@@ -3,6 +3,7 @@ defmodule StockprojectWeb.RecordController do
 
   alias Stockproject.Records
   alias Stockproject.Records.Record
+  alias Stockproject.Stocks
 
   action_fallback StockprojectWeb.FallbackController
 
@@ -11,8 +12,11 @@ defmodule StockprojectWeb.RecordController do
     render(conn, "index.json", records: records)
   end
 
+#{abbreviation: ""}
   def create(conn, %{"record" => record_params}) do
-    with {:ok, %Record{} = record} <- Records.create_record(record_params) do
+    stock = Stocks.prepare_stock(record_params["abbreviation"])
+    params = Map.put(record_params, "stock_id", stock.id)
+    with {:ok, %Record{} = record} <- Records.create_record(params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.record_path(conn, :show, record))

@@ -40,4 +40,20 @@ defmodule StockprojectWeb.PortfolioController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def get_portfolio_value(conn, %{"id" => id}) do
+    value = PortfolioUtil.calc_portfolio_value(id)
+    render(conn, "portfolio_value.json", value: value)
+  end
+
+  def get_portfolio_stats(conn, %{"id" => id}) do
+    data = PortfolioUtil.calc_portfolio_stats(id)
+    render(conn, "portfolio_stats.json", data: data)
+  end
+
+  def get_historical_value(conn, %{"id" => id}) do
+    #[%{date, value}]
+    data = PortfolioUtil.calc_historial_values(id)
+    render(conn, "portfolio_history.json", data: data)
+  end
 end

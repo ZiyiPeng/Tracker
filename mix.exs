@@ -47,6 +47,8 @@ defmodule Stockproject.MixProject do
       {:argon2_elixir, "~> 1.3"},
       {:comeonin, "~> 4.1"},
       {:stoxir, "~> 0.1.1"},
+      {:httpoison, "~> 1.5"},
+      { :statistics, "~> 0.5.0"},
     ]
   end
 

@@ -6,6 +6,10 @@ defmodule StockprojectWeb.StockController do
 
   action_fallback StockprojectWeb.FallbackController
 
+  def init(args) do
+    args
+  end
+
   def index(conn, _params) do
     stocks = Stocks.list_stocks()
     render(conn, "index.json", stocks: stocks)
@@ -40,4 +44,16 @@ defmodule StockprojectWeb.StockController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def look_up_company(conn, %{"abbreviation" => ab}) do
+    result = Stoxir.company(ab)
+    render(conn, "company.json", company: result)
+  end
+  #time-span has to be one of 1y, 2y, 5y, 6m, 3m, 1m, 1d
+  def stock_history(conn, %{"abbreviation" => ab,  "time-span" => time}) do
+    IO.puts(time)
+    history = StockUtil.get_history(ab, time)
+    render(conn, "stock_history.json", data: history)
+  end
+
 end

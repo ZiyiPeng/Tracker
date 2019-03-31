@@ -5,6 +5,7 @@ defmodule Stockproject.Stocks do
 
   import Ecto.Query, warn: false
   alias Stockproject.Repo
+  alias StockUtil
 
   alias Stockproject.Stocks.Stock
 
@@ -18,7 +19,37 @@ defmodule Stockproject.Stocks do
 
   """
   def list_stocks do
-    Repo.all(Stock)
+    stocks = Repo.all(Stock)
+    Enum.map(stocks, fn x-> Map.put(x, :logo, StockUtil.get_logo(x.abbreviation)) end)
+  end
+
+#update the given stock if necessary
+#add a new stock to the database if the one we are looking for does not exist
+  def prepare_stock(abbrev) do
+    target = Repo.get_by(Stock, abbreviation: abbrev)
+    #stock is in the database, check updated date
+    if target do
+      if need_update(target) do
+        risk = StockUtil.calc_risk(abbrev)
+        ror = StockUtil.get_annual_ror(abbrev)
+        %{beta: beta, name: name} = StockUtil.get_info(abbrev)
+        update_stock(target, %{risk: risk, beta: beta, rate_of_return: ror, name: name})
+      else
+        target
+      end
+    else
+      risk = StockUtil.calc_risk(abbrev)
+      ror = StockUtil.get_annual_ror(abbrev)
+      %{beta: beta, name: name} = StockUtil.get_info(abbrev)
+      create_stock(%{name: name, beta: beta, rate_of_return: ror, risk: risk, abbreviation: abbrev})
+    end
+  end
+
+  #a stock's info needs to be updated every 2 month
+  def need_update(stock) do
+    time_now = DateTime.utc_now()
+    diff_sec = DateTime.diff(stock.modified_date, time_now)
+    diff_sec > 2*30*24*60*60
   end
 
   @doc """
@@ -35,8 +66,12 @@ defmodule Stockproject.Stocks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_stock!(id), do: Repo.get!(Stock, id)
+  def get_stock!(id), do: Repo.get(Stock, id)
 
+  def get_stock(id) do
+    stock = Repo.get(Stock, id)
+    Map.put(stock, :logo, StockUtil.get_logo(stock.abbreviation))
+  end
   @doc """
   Creates a stock.
 
@@ -52,7 +87,7 @@ defmodule Stockproject.Stocks do
   def create_stock(attrs \\ %{}) do
     %Stock{}
     |> Stock.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert!()
   end
 
   @doc """

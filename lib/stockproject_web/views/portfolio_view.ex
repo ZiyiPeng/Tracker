@@ -17,4 +17,16 @@ defmodule StockprojectWeb.PortfolioView do
       name: portfolio.name,
       records: records}
   end
+
+  def render("portfolio_value.json", %{value: value}) do
+    %{value: value}
+  end
+
+  def render("portfolio_stats.json", %{data: data}) do
+    %{composition: data.composition, risk: data.risk, beta: data.beta, rate_of_return: data.ror}
+  end
+
+  def render("portfolio_history.json", %{data: data}) do
+    data
+  end
 end

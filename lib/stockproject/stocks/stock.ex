@@ -17,6 +17,6 @@ defmodule Stockproject.Stocks.Stock do
   def changeset(stock, attrs) do
     stock
     |> cast(attrs, [:name, :abbreviation, :risk, :modified_date, :beta, :rate_of_return])
-    |> validate_required([:name, :abbreviation, :risk, :modified_date])
+    |> validate_required([:name, :abbreviation, :risk])
   end
 end
