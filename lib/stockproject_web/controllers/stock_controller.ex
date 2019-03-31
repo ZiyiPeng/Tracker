@@ -56,4 +56,15 @@ defmodule StockprojectWeb.StockController do
     render(conn, "stock_history.json", data: history)
   end
 
+  def get_suggestions(conn, %{"input" => name}) do
+    suggestions = StockUtil.search_suggestion(name)
+    render(conn, "seggestion.json", suggestions: suggestions)
+  end
+
+  # time span has to be one of 1min, 5min, 15min, 30min, 60min
+  def get_intraday_value(conn, %{"abbreviation" => ab, "time-span" => time}) do
+    data = StockUtil.search_intraday(ab, time)
+    render(conn, "intraday_value.json", data: data)
+  end
+
 end

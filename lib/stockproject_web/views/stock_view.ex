@@ -35,4 +35,12 @@ defmodule StockprojectWeb.StockView do
     %{history: histories}
   end
 
+  def render("seggestion.json", %{suggestions: suggestions}) do
+    %{best_matches: suggestions}
+  end
+
+  def render("intraday_value.json", %{data: data}) do
+    %{metadata: data.metadata, prices: data.prices}
+  end
+
 end

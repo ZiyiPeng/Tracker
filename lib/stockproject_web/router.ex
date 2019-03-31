@@ -26,12 +26,15 @@ defmodule StockprojectWeb.Router do
     resources "/stocks", StockController, except: [:new, :edit]
     get "/stock_company", StockController, :look_up_company
     get "/stock_history", StockController, :stock_history
+    get "/stock_search", StockController, :get_suggestions
+    get "/stock_intraday", StockController, :get_intraday_value
 
 
     resources "/users", UserController, except: [:new, :edit]
     resources "/portfolio", PortfolioController, except: [:new, :edit]
     get "/portfolio_value", PortfolioController, :get_portfolio_value
     get "/portfolio_history", PortfolioController, :get_historical_value
+    get "/portfolio_stats", PortfolioController, :get_portfolio_stats
 
     resources "/records", RecordController, except: [:new, :edit]
     post "/auth", AuthController, :authenticate

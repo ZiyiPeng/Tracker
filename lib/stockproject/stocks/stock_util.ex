@@ -43,5 +43,23 @@ defmodule StockUtil do
     data = Jason.decode!(resp.body)
     Enum.map(data, fn x -> %{close: x["close"], date: x["date"]} end)
   end
-  
+
+  def search_suggestion(name) do
+    key = "7E3XEF8EJVICCTXE"
+    url = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=#{name}&apikey=#{key}"
+    resp = HTTPoison.get!(url)
+    data = Jason.decode!(resp.body)
+    data["bestMatches"]
+  end
+
+#%{metadata: data.meta, price: data.price}
+  def search_intraday(abbrev, time) do
+    key = "7E3XEF8EJVICCTXE"
+    url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=#{abbrev}&interval=5min&apikey=#{key}"
+    resp = HTTPoison.get!(url)
+    data = Jason.decode!(resp.body)
+    #IO.inspect(data)
+    IO.puts("Time Series (#{time})")
+    %{metadata: data["Meta Data"], prices: data["Time Series (#{time})"]}
+  end
 end

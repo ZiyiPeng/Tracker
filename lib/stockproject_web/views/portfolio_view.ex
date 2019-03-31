@@ -23,7 +23,7 @@ defmodule StockprojectWeb.PortfolioView do
   end
 
   def render("portfolio_stats.json", %{data: data}) do
-    %{composition: data.composition, risk: data.risk, beta: data.beta, rate_of_return: data.ror}
+    %{composition: data.composition, risk: data.risk, beta: data.beta, rate_of_return: data.rate_of_return}
   end
 
   def render("portfolio_history.json", %{data: data}) do

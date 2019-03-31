@@ -56,4 +56,5 @@ defmodule StockprojectWeb.PortfolioController do
     data = PortfolioUtil.calc_historial_values(id)
     render(conn, "portfolio_history.json", data: data)
   end
+
 end
