@@ -4,4 +4,10 @@
     <label for="autocomplete">stock: </label>
     <input id="autocomplete">
   </div>
+
+  <div id="graph">
+    <p>graph loading....</p>
+  </div>
+
+  <canvas id="history-chart" width="800" height="450"></canvas>
 </div>
