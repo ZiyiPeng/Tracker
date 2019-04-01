@@ -1,0 +1,47 @@
+
+
+$(function() {
+  function get_suggestsions(input) {
+    $.ajax(`http://localhost:4000/api/stock_search?input=${input}`, {
+    method: "get",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    success: (resp) => {
+      let option = _.map(resp["best_matches"], function(e) {
+        return e["1. symbol"]
+      });
+      return option;
+    },
+    });
+  }
+
+  $("#tags").change(function(){
+    console.log("reached")
+    let input = document.getElementById("tags").value;
+    let option = get_suggestsions(input);
+    $( "#tags" ).autocomplete({
+      source: option
+    });
+  });
+
+  });
+-----
+  $(function() {
+    let input = document.getElementById("tags").value;
+    var options = {
+        url: function(phrase) {
+            if (phrase !== "") {
+                return "http://localhost:4000/api/stock_search?input=" + phrase;
+            }
+        },
+        getValue: "Text",
+        ajaxSettings: {
+            dataType: "jsonp"
+        },
+        listLocation: "best_matches",
+        requestDelay: 300,
+        theme: "round"
+    };
+
+    $("#tags").easyAutocomplete(options);
+    });

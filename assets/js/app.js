@@ -1,17 +1,31 @@
-// We need to import the CSS so that webpack will load it.
-// The MiniCssExtractPlugin is used to separate it out into
-// its own CSS file.
-import css from "../css/app.css"
+import jQuery from 'jquery';
+window.jQuery = window.$ = jQuery;
+import _ from "lodash";
 
-// webpack automatically bundles all modules in your
-// entry points. Those entry points can be configured
-// in "webpack.config.js".
-//
-// Import dependencies
-//
-import "phoenix_html"
+$(function() {
+  function get_suggestsions(input) {
+    console.log("input: "+ input)
+    $.ajax(`http://localhost:4000/api/stock_search?input=${input}`, {
+    method: "get",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    success: (resp) => {
+      console.log(resp)
+      let option = _.map(resp["best_matches"], function(e) {
+        return e["1. symbol"] + " (" + e["2. name"] + ")"
+      });
+      console.log(option)
+      $( "#autocomplete" ).autocomplete({
+        source: option
+      });
+    },
+    });
+  }
 
-// Import local files
-//
-// Local files can be imported directly using relative paths, for example:
-// import socket from "./socket"
+  $("#autocomplete").on('input', function(){
+    console.log("reached")
+    let input = document.getElementById("autocomplete").value;
+    get_suggestsions(input);
+  });
+
+  });
