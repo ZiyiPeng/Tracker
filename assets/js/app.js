@@ -40,6 +40,41 @@ $(function() {
     });
   }
 
+  function render_portfolio_composition(portfolio_id) {
+    $.ajax(`http://localhost:4000/api/portfolio_stats?id=${portfolio_id}`, {
+    method: "get",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    success: (resp) => {
+      let stocks = _.map(resp["composition"], function(x){return x["abbreviation"]});
+      let data = _.map(resp["composition"], function(x){return x["weight"] * 100});
+      render_pie_chart(stocks, data)
+    },
+    });
+  }
+
+  function render_pie_chart(stock_names, data_array) {
+    new Chart(document.getElementById("doughnut-chart"), {
+      type: 'doughnut',
+      data: {
+        labels: stock_names,
+        datasets: [
+          {
+            label: "Population (millions)",
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            data: data_array
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'portfolio composition'
+        }
+      }
+    });
+  }
+
 
 
   //search box
@@ -65,5 +100,5 @@ $(function() {
   });
 
   $("#graph").html(render_stock_history("AAPL", "1m"))
-
+  $("#graph").html(render_portfolio_composition(1))
 });
