@@ -8,7 +8,7 @@ defmodule StockprojectWeb.PortfolioController do
 
   def index(conn, _params) do
     portfolio = Portfolios.list_portfolio()
-    render(conn, "index.json", portfolio: portfolio)
+    render(conn, "index.html", portfolio: portfolio)
   end
 
   def create(conn, %{"portfolio" => portfolio_params}) do
@@ -16,20 +16,20 @@ defmodule StockprojectWeb.PortfolioController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.portfolio_path(conn, :show, portfolio))
-      |> render("show.json", portfolio: portfolio)
+      |> render("show.html", portfolio: portfolio)
     end
   end
 
   def show(conn, %{"id" => id}) do
     portfolio = Portfolios.get_portfolio(id)
-    render(conn, "show.json", portfolio: portfolio)
+    render(conn, "show.html", portfolio: portfolio)
   end
 
   def update(conn, %{"id" => id, "portfolio" => portfolio_params}) do
     portfolio = Portfolios.get_portfolio!(id)
 
     with {:ok, %Portfolio{} = portfolio} <- Portfolios.update_portfolio(portfolio, portfolio_params) do
-      render(conn, "show.json", portfolio: portfolio)
+      render(conn, "show.html", portfolio: portfolio)
     end
   end
 

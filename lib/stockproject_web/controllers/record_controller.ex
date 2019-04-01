@@ -9,7 +9,7 @@ defmodule StockprojectWeb.RecordController do
 
   def index(conn, _params) do
     records = Records.list_records()
-    render(conn, "index.json", records: records)
+    render(conn, "index.html", records: records)
   end
 
 #{abbreviation: ""}
@@ -20,20 +20,20 @@ defmodule StockprojectWeb.RecordController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.record_path(conn, :show, record))
-      |> render("show.json", record: record)
+      |> render("show.html", record: record)
     end
   end
 
   def show(conn, %{"id" => id}) do
     record = Records.get_record!(id)
-    render(conn, "show.json", record: record)
+    render(conn, "show.html", record: record)
   end
 
   def update(conn, %{"id" => id, "record" => record_params}) do
     record = Records.get_record!(id)
 
     with {:ok, %Record{} = record} <- Records.update_record(record, record_params) do
-      render(conn, "show.json", record: record)
+      render(conn, "show.html", record: record)
     end
   end
 
