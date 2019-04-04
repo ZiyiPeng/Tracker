@@ -1,0 +1,350 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>Stock Anaylisis</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+
+    <!-- plugins css -->
+    <link rel="stylesheet" href="assets/vendors/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="assets/vendors/PACE/themes/blue/pace-theme-minimal.css" />
+    <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/css/perfect-scrollbar.min.css" />
+
+    <!-- page plugins css -->
+    <link rel="stylesheet" href="assets/vendors/bower-jvectormap/jquery-jvectormap-1.2.2.css" />
+    <link rel="stylesheet" href="assets/vendors/nvd3/build/nv.d3.min.css" />
+
+    <!-- core css -->
+    <link href="assets/css/ei-icon.css" rel="stylesheet">
+    <link href="assets/css/themify-icons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/animate.min.css" rel="stylesheet">
+    <link href="assets/css/app.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app">
+        <div class="layout">
+            <!-- Side Nav START -->
+            <div class="side-nav">
+                <div class="side-nav-inner">
+                    <div class="side-nav-logo">
+                        <div class="mobile-toggle side-nav-toggle">
+                            <a href="">
+                                <i class="ti-arrow-circle-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="side-nav-menu scrollable">
+                        <li class="nav-item active">
+                            <a class="mrg-top-30" href="index.html">
+                                <span class="icon-holder">
+										<i class="ti-home"></i>
+									</span>
+                                <span class="title">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="mrg-top-30" href="index.html">
+                                <span class="icon-holder">
+										<i class="ei-dollar"></i>
+									</span>
+                                <span class="title">Stocks</span>
+                            </a>
+                        </li>             
+    
+                    </ul>
+                </div>
+            </div>
+            <!-- Side Nav END -->
+
+            <!-- Page Container START -->
+            <div class="page-container">
+                <!-- Header START -->
+                <div class="header navbar">
+                    <div class="header-container">
+                        <ul class="nav-left">
+                            <li class="search-box">
+                                <a class="search-toggle no-pdd-right" href="javascript:void(0);">
+                                    <i class="search-icon ti-search pdd-right-10"></i>
+                                    <i class="search-icon-close ti-close pdd-right-10"></i>
+                                </a>
+                            </li>
+                            <li class="search-input">
+                                <input class="form-control" type="text" placeholder="Search...">
+                                <div class="advanced-search">
+                                    <div class="search-wrapper">
+                                        <div class="pdd-vertical-10">
+                                            <span class="display-block mrg-vertical-5 pdd-horizon-20 text-gray">
+													<i class="ti-user pdd-right-5"></i>
+													<span>Stocks</span>
+                                            </span>
+                                            <!--stocks-->
+                                            <ul class="list-unstyled list-info">
+                                                <li>
+                                                    <a href="">
+                                                        <div class="info">
+                                                            <span class="title">Company A</span>
+                                                            <span class="sub-title">
+																	<i class="ti-location-pin"></i>
+																	<span>Abbreviation</span>
+                                                            </span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                
+                                    </div>
+                                    <div class="search-footer">
+                                        <span>You are Searching for '<b class="text-dark"><span class="serach-text-bind"></span></b>'</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="nav-right">
+                            <li class="user-profile dropdown">
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                                    <div class="user-info">
+                                        <span class="name pdd-right-5">Nate Leong</span>
+                                        <i class="ti-angle-down font-size-10"></i>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="">
+                                            <i class="ti-user pdd-right-10"></i>
+                                            <span>Profile</span>
+                                        </a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="">
+                                            <i class="ti-power-off pdd-right-10"></i>
+                                            <span>Logout</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Header END -->
+
+                <!-- Side Panel START -->
+                <div class="side-panel">
+                    <div class="side-panel-wrapper bg-white">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#chat" role="tab" data-toggle="tab">
+                                    <span>Chat</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#profile" role="tab" data-toggle="tab">
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="#todo-list" role="tab" data-toggle="tab">
+                                    <span>Todo</span>
+                                </a>
+                            </li>
+                            <li class="panel-close">
+                                <a class="side-panel-toggle" href="javascript:void(0);">
+                                    <i class="ti-close"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Side Panel END -->
+
+                
+                <!-- Content Wrapper START -->
+                <div class="main-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="inline-block">
+                                            <h1 class="no-mrg-vertical">$168.90</h1>
+                                            <p>This Month</p>
+                                        </div>
+                                        <div class="pdd-top-25 inline-block pull-right">
+                                            <span class="label label-success label-lg mrg-left-5">+18%</span>
+                                        </div>
+                                        <div class="mrg-top-25">
+                                            <div id="bar-config"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-block">
+                                        <p class="mrg-btm-5">This Quarter</p>
+                                        <h1 class="no-mrg-vertical font-size-35">$3,936<b class="font-size-16">.80</b></h1>
+                                        <p class="text-semibold">Total Revenue</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="card">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="maps map-500 padding-20">
+                                                <p>graph 1</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 border left border-hide-sm">
+                                            <div class="card-block">
+                                                <h2>Stock % </h2>
+                                                <div class="mrg-top-40">
+                                                    <div>
+                                                        <canvas height="230" id="allocation-chart"></canvas>
+                                                    </div>
+                                                </div>
+                                                <div class="widget-legends mrg-top-30">
+                                                    <div class="relative mrg-top-15">
+                                                        <span class="status info"> </span>
+                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">25%</b> Stock1</span>
+                                                    </div>
+                                                    <div class="relative mrg-top-15">
+                                                        <span class="status primary"> </span>
+                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">45%</b> Stock2</span>
+                                                    </div>
+                                                    <div class="relative mrg-top-15">
+                                                        <span class="status success"> </span>
+                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">10%</b> Stock3</span>
+                                                    </div>
+                                                    <div class="relative mrg-top-15">
+                                                        <span class="status"> </span>
+                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">15%</b> Stock4</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-7 col-md-12">
+                                <div class="widget card">
+                                    <div class="card-block">
+                                        <h5 class="card-title">Monthly Overview</h5>
+                                        <div class="row mrg-top-30">
+                                            <div class="col-md-3 col-sm-6 col-6 border right border-hide-md">
+                                                <div class="text-center pdd-vertical-10">
+                                                    <h2 class="font-primary no-mrg-top">8%</h2>
+                                                    <p class="no-mrg-btm">APPL</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-6 col-6 border right border-hide-md">
+                                                <div class="text-center pdd-vertical-10">
+                                                    <h2 class="font-primary no-mrg-top">$1,730</h2>
+                                                    <p class="no-mrg-btm">M.AVG</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-6 col-6 border right border-hide-md">
+                                                <div class="text-center pdd-vertical-10">
+                                                    <h2 class="font-primary no-mrg-top">77%</h2>
+                                                    <p class="no-mrg-btm">Increment</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-6 col-6">
+                                                <div class="text-center pdd-vertical-10">
+                                                    <h2 class="font-primary no-mrg-top">18%</h2>
+                                                    <p class="no-mrg-btm">Profit</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mrg-top-35">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <canvas id="line-chart" height="220"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-12">
+                                <div class="card">
+                                    <div class="card-heading">
+                                        <h4 class="card-title inline-block pdd-top-5">Stocks Owned</h4>
+                                        <a href="" class="btn btn-default pull-right no-mrg">View All Your Stocks</a>
+                                    </div>
+                                    <div class="pdd-horizon-20 pdd-vertical-5">
+                                        <div class="overflow-y-auto relative scrollable" style="max-height: 381px">
+                                            <table class="table table-lg table-hover">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="list-info">
+                                                                <div class="info">
+                                                                    <span class="title">Company A</span>
+                                                                    <span class="sub-title">Abbreviation</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="mrg-top-10">
+                                                                <span>amount</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="relative mrg-top-10">
+                                                                <span class="pdd-left-20">value</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Content Wrapper END -->
+
+            </div>
+            <!-- Page Container END -->
+
+        </div>
+    </div>
+
+    <!-- build:js assets/js/vendor.js -->
+    <!-- plugins js -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="assets/vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/vendors/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="assets/vendors/PACE/pace.min.js"></script>
+    <script src="assets/vendors/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <!-- endbuild -->
+
+    <!-- page plugins js -->
+    <script src="assets/vendors/bower-jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="assets/js/maps/jquery-jvectormap-us-aea.js"></script>
+    <script src="assets/vendors/d3/d3.min.js"></script>
+    <script src="assets/vendors/nvd3/build/nv.d3.min.js"></script>
+    <script src="assets/vendors/jquery.sparkline/index.js"></script>
+    <script src="assets/vendors/chart.js/dist/Chart.min.js"></script>
+
+    <!-- build:js assets/js/app.min.js -->
+    <!-- core js -->
+    <script src="assets/js/app.js"></script>
+    <!-- endbuild -->
+
+    <!-- page js -->
+    <script src="assets/js/dashboard/dashboard.js"></script>
+
+</body>
+
+</html>

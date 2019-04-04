@@ -2,7 +2,7 @@ defmodule StockprojectWeb.Router do
   use StockprojectWeb, :router
   alias StockprojectWeb.StockController
   alias StockprojectWeb.RecordController
-  alias StockprojectWeb.PortfolioController
+  # alias StockprojectWeb.PortfolioController
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -21,7 +21,7 @@ defmodule StockprojectWeb.Router do
     get "/", PageController, :index
     resources "/stocks", StockController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]
-    resources "/portfolio", PortfolioController, except: [:new, :edit]
+    resources "/portfolios", PortfolioController, except: [:new, :edit]
     resources "/records", RecordController, except: [:new, :edit]
   end
 
