@@ -3,6 +3,7 @@ defmodule StockprojectWeb.Router do
   alias StockprojectWeb.StockController
   alias StockprojectWeb.RecordController
   alias StockprojectWeb.PortfolioController
+  alias StockprojectWeb.AuthController
 
   pipeline :browser do
     plug :accepts, ["html"]

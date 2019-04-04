@@ -8,6 +8,7 @@
   <div id="graph">
   </div>
 
-  <canvas id="history-chart" width="800" height="450"></canvas>
+  <canvas id="stock-history-chart" width="800" height="450"></canvas>
+  <canvas id="portfolio-history-chart" width="800" height="450"></canvas>
   <canvas id="doughnut-chart" width="800" height="450"></canvas>
 </div>

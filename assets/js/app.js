@@ -13,14 +13,27 @@ $(function() {
     success: (resp) => {
       let dates = _.map(resp["history"], function(x){return x["date"]});
       let data = _.map(resp["history"], function(x){return x["price"]});
-      linear_graph(abbrev, dates, data)
+      linear_graph("stock-history-chart", abbrev, dates, data)
+    },
+    });
+  }
+
+  function render_portfolio_history(portfolio_id) {
+    $.ajax(`http://localhost:4000/api/portfolio_history?id=${portfolio_id}`, {
+    method: "get",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    success: (resp) => {
+      let dates = _.map(resp, function(x){return x["date"]});
+      let data = _.map(resp, function(x){return x["value"]});
+      linear_graph("portfolio-history-chart", "portfolio", dates, data)
     },
     });
   }
 
 
-  function linear_graph(abbrev, x_array, y_array) {
-    new Chart(document.getElementById("history-chart"), {
+  function linear_graph(canvas_id, abbrev, x_array, y_array) {
+    new Chart(document.getElementById(canvas_id), {
       type: 'line',
       data: {
         labels: x_array,
@@ -34,7 +47,7 @@ $(function() {
       options: {
         title: {
           display: true,
-          text: 'stock price'
+          text: 'portfolio value'
         }
       }
     });
@@ -99,6 +112,7 @@ $(function() {
     get_suggestsions(input);
   });
 
-  $("#graph").html(render_stock_history("AAPL", "1m"))
-  $("#graph").html(render_portfolio_composition(1))
+  render_stock_history("AAPL", "1m");
+  render_portfolio_history(1);
+  render_portfolio_composition(1);
 });
