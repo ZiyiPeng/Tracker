@@ -9,10 +9,26 @@ import Chart from 'chart.js';
 
 
 function StockIndex(props) {
+  if(props.stock) {
+    console.log("has stock")
+    render_graph();
+  }
   return (
-    <div className="ui-widget">
-      <input id="autocomplete" onInput={()=>search()}></input>
-      <button id="search-submit" onClick={()=>perform_search()}></button>
+    <div>
+      <div className="ui-widget">
+        <input id="autocomplete" onInput={()=>search()}></input>
+        <button id="search-submit" onClick={()=>perform_search()}>search</button>
+      </div>
+      <div>
+        <select id="time-select">
+           <option value="1d">1 day</option>
+           <option value="3m">3 month</option>
+           <option value="6m">6 month</option>
+           <option value="1y">1 year</option>
+           <option value="2y">2 year</option>
+        </select>
+        <canvas id="stock-history-chart" width="800" height="450"></canvas>
+      </div>
     </div>
   );
 }
@@ -35,6 +51,12 @@ function perform_search() {
   api.prepare_stock(input);
 }
 
+function render_graph() {
+  let time = document.getElementById("time-select").value;
+  let stock_abbrev = document.getElementById("autocomplete").value;
+  render_stock_history(stock_abbrev, time);
+}
+
 function get_suggestsions(input){
   $.ajax(`http://localhost:4000/api/stock_search?input=${input}`, {
   method: "get",
@@ -48,6 +70,40 @@ function get_suggestsions(input){
       source: option
     });
   },
+  });
+}
+
+function render_stock_history(abbrev, time) {
+  $.ajax(`http://localhost:4000/api/stock_history?abbreviation=${abbrev}&time-span=${time}`, {
+  method: "get",
+  dataType: "json",
+  contentType: "application/json; charset=UTF-8",
+  success: (resp) => {
+    let dates = _.map(resp["history"], function(x){return x["date"]});
+    let data = _.map(resp["history"], function(x){return x["price"]});
+    linear_graph("stock-history-chart", abbrev, dates, data)
+  },
+  });
+}
+
+function linear_graph(canvas_id, abbrev, x_array, y_array) {
+  new Chart(document.getElementById(canvas_id), {
+    type: 'line',
+    data: {
+      labels: x_array,
+      datasets: [{
+        data: y_array,
+        label: abbrev,
+        borderColor: "#3e95cd",
+        fill: false
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'portfolio value'
+      }
+    }
   });
 }
 

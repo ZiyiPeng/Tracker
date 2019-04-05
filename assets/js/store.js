@@ -47,10 +47,9 @@ function portfolio_stats(state=[], action) {
   }
 }
 
-function stock(state=[], action) {
+function stock(state=null, action) {
   switch (action.type) {
-  case 'PPORTFOLIO_GET':
-    console.log(action.data);
+  case 'STOCK_PREPARE':
     return action.data;
   default:
     return state;
@@ -89,7 +88,10 @@ function login_form(state = login_form0, action) {
 function root_reducer(state0, action) {
   //console.log("reducer", state0, action);
 
-  let reducer = combineReducers({portfolio: portfolio, users: users,session: session,
+  let reducer = combineReducers({
+    portfolio: portfolio,
+    users: users,
+    session: session,
     current_stock: stock,
     portfolio_stats: portfolio_stats});
   let state1 = reducer(state0, action);

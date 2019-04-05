@@ -48,11 +48,11 @@ class TheServer {
 
   prepare_stock(abbrev) {
     this.send_post(
-      "/api/prepare_stock", {abbreviation: abbrev}
+      "/api/prepare_stock", {abbreviation: abbrev},
       (resp) => {
         store.dispatch({
-          type: 'USER_LIST',
-          data: resp.data,
+          type: 'STOCK_PREPARE',
+          data: resp,
         });
       }
     );
