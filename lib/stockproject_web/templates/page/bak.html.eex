@@ -1,0 +1,14 @@
+<div>
+  <p>index page</p>
+  <div class="ui-widget">
+    <label for="autocomplete">stock: </label>
+    <input id="autocomplete">
+  </div>
+
+  <div id="graph">
+  </div>
+
+  <canvas id="stock-history-chart" width="800" height="450"></canvas>
+  <canvas id="portfolio-history-chart" width="800" height="450"></canvas>
+  <canvas id="doughnut-chart" width="800" height="450"></canvas>
+</div>

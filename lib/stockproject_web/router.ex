@@ -3,6 +3,7 @@ defmodule StockprojectWeb.Router do
   alias StockprojectWeb.StockController
   alias StockprojectWeb.RecordController
   alias StockprojectWeb.PortfolioController
+  alias StockprojectWeb.UserController
   alias StockprojectWeb.AuthController
 
   pipeline :browser do
@@ -20,6 +21,7 @@ defmodule StockprojectWeb.Router do
   scope "/", StockprojectWeb do
     pipe_through :browser
     get "/", PageController, :index
+    get "/portfolio", PageController, :index
   end
 
   scope "/api" do
@@ -29,6 +31,7 @@ defmodule StockprojectWeb.Router do
     get "/stock_history", StockController, :stock_history
     get "/stock_search", StockController, :get_suggestions
     get "/stock_intraday", StockController, :get_intraday_value
+    post "/prepare_stock", StockController, :prepare_stock
 
 
     resources "/users", UserController, except: [:new, :edit]

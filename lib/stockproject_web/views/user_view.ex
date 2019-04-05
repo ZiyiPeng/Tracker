@@ -12,7 +12,9 @@ defmodule StockprojectWeb.UserView do
 
   def render("user.json", %{user: user}) do
     %{id: user.id,
-      username: user.username,
-      password_hash: user.password_hash}
+      username: user.name,
+      password_hash: user.password_hash,
+      portfolio_id: user.portfolio.id
+    }
   end
 end

@@ -18,8 +18,7 @@ defmodule Stockproject.Users do
 
   """
   def list_users do
-    Repo.all(User)
-    |> preload([:portfolio])
+    Repo.all from p in User, preload: [:portfolio]
   end
 
   def get_user_by_name(name) do
@@ -30,6 +29,7 @@ defmodule Stockproject.Users do
 
   def authenticate_user(name, password) do
     Repo.get_by(User, name: name)
+    |> IO.inspect()
     |> Comeonin.Argon2.check_pass(password)
   end
 
@@ -76,9 +76,16 @@ defmodule Stockproject.Users do
 
   """
   def create_user(attrs \\ %{}) do
-    %User{}
-    |> User.changeset(attrs)
-    |> Repo.insert()
+    user = User.changeset(%User{}, attrs)
+    user = Repo.insert!(user)
+    id = user.id
+    portfolio = elem(Stockproject.Portfolios.create_portfolio(%{name: user.name, user_id: id}),1)
+    IO.inspect(portfolio)
+    user
+    |> Repo.preload([:portfolio])
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_assoc(:portfolio, portfolio)
+    |> Repo.update
   end
 
   @doc """

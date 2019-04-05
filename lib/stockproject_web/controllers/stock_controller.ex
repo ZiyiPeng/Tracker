@@ -16,7 +16,7 @@ defmodule StockprojectWeb.StockController do
   end
 
   def create(conn, %{"stock" => stock_params}) do
-    with {:ok, %Stock{} = stock} <- Stocks.create_stock(stock_params) do
+    with {%Stock{} = stock} <- Stocks.prepare_stock(stock_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.stock_path(conn, :show, stock))
@@ -49,6 +49,12 @@ defmodule StockprojectWeb.StockController do
     result = Stoxir.company(ab)
     render(conn, "company.json", company: result)
   end
+
+  def prepare_stock(conn, %{"abbreviation" => ab}) do
+    stock = Stocks.prepare_stock(ab)
+    render(conn, "stock.json", stock: stock)
+  end
+
   #time-span has to be one of 1y, 2y, 5y, 6m, 3m, 1m, 1d
   def stock_history(conn, %{"abbreviation" => ab,  "time-span" => time}) do
     IO.puts(time)

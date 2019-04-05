@@ -27,21 +27,23 @@ defmodule Stockproject.Stocks do
 #add a new stock to the database if the one we are looking for does not exist
   def prepare_stock(abbrev) do
     target = Repo.get_by(Stock, abbreviation: abbrev)
+    IO.inspect(target)
     #stock is in the database, check updated date
     if target do
       if need_update(target) do
         risk = StockUtil.calc_risk(abbrev)
         ror = StockUtil.get_annual_ror(abbrev)
         %{beta: beta, name: name} = StockUtil.get_info(abbrev)
-        update_stock(target, %{risk: risk, beta: beta, rate_of_return: ror, name: name})
+        update_stock(target, %{risk: risk, beta: beta, rate_of_return: ror, name: name, modified_date: DateTime.utc_now()})
       else
         target
       end
     else
+      IO.puts("reached")
       risk = StockUtil.calc_risk(abbrev)
       ror = StockUtil.get_annual_ror(abbrev)
       %{beta: beta, name: name} = StockUtil.get_info(abbrev)
-      create_stock(%{name: name, beta: beta, rate_of_return: ror, risk: risk, abbreviation: abbrev})
+      create_stock(%{name: name, beta: beta, rate_of_return: ror, risk: risk, abbreviation: abbrev, modified_date: DateTime.utc_now()})
     end
   end
 
@@ -49,7 +51,8 @@ defmodule Stockproject.Stocks do
   def need_update(stock) do
     time_now = DateTime.utc_now()
     diff_sec = DateTime.diff(stock.modified_date, time_now)
-    diff_sec > 2*30*24*60*60
+    IO.puts(diff_sec)
+    abs(diff_sec) > 2*30*24*60*60
   end
 
   @doc """
@@ -105,7 +108,7 @@ defmodule Stockproject.Stocks do
   def update_stock(%Stock{} = stock, attrs) do
     stock
     |> Stock.changeset(attrs)
-    |> Repo.update()
+    |> Repo.update!()
   end
 
   @doc """

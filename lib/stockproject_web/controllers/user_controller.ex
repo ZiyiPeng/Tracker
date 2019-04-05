@@ -8,10 +8,13 @@ defmodule StockprojectWeb.UserController do
 
   def index(conn, _params) do
     users = Users.list_users()
+    IO.inspect(users)
     render(conn, "index.json", users: users)
   end
 
   def create(conn, %{"user" => user_params}) do
+    password = Argon2.hash_pwd_salt(Map.get(user_params, "password"))
+    user_params = Map.put(user_params, "password_hash", password)
     with {:ok, %User{} = user} <- Users.create_user(user_params) do
       conn
       |> put_status(:created)
