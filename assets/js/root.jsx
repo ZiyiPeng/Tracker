@@ -10,7 +10,7 @@ import api from './api';
 import Header from './header';
 //import UserList from './component/user_list';
 //import TaskList from './component/task_list';
-//import CreateTaskForm from './component/create_task_form';
+import Company from './component/stock_company';
 import PortfolioIndex from './component/portfolio_index';
 import StockIndex from './component/stock_index';
 import CreateUserForm from './component/create_user_form';
@@ -44,6 +44,9 @@ class Root extends React.Component {
               } />
               <Route path="/stock" exact={true} render={() =>
                 <StockIndex />
+              } />
+              <Route path="/stock_company" exact={true} render={() =>
+                <Company />
               } />
             </div>
           </div>

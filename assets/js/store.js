@@ -81,6 +81,16 @@ function session(state = null, action) {
   }
 }
 
+function company(state = null, action) {
+  switch (action.type) {
+  case 'COMPANY_GET':
+    return action.data;
+  default:
+    return state;
+  }
+}
+
+
 let login_form0 = {name: "", password: ""};
 function login_form(state = login_form0, action) {
   return state;
@@ -94,6 +104,7 @@ function root_reducer(state0, action) {
     users: users,
     session: session,
     current_stock: stock,
+    company: company, 
     portfolio_stats: portfolio_stats});
   let state1 = reducer(state0, action);
 

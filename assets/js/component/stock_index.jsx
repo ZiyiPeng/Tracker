@@ -42,6 +42,7 @@ function StockIndex(props) {
       <div id="stock-stat">
         {stock}
       </div>
+      <Link to={"/stock_company"} onClick={()=>api.get_company(props.stock.abbreviation)}>company info</Link>
       <div>
         {add_record_form}
       </div>

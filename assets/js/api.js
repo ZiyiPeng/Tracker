@@ -178,6 +178,18 @@ class TheServer {
     });
   }
 
+  get_company(abbrev) {
+    this.send_get(
+      "/api/stock_company?abbreviation="+abbrev,
+      (resp) => {
+        store.dispatch({
+          type: 'COMPANY_GET',
+          data: resp, 
+        });
+      }
+    );
+  }
+
 
 }
 
