@@ -18,7 +18,8 @@ defmodule StockprojectWeb.RecordView do
       amount: record.amount,
       quantity: record.quantity,
       purchased_price: record.purchased_price,
-      stock: stock
+      stock: stock,
+      portfolio_id: record.portfolio_id
     }
   end
 end

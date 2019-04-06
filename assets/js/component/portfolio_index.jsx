@@ -35,7 +35,7 @@ function RenderStat(props) {
   <div>
     <ul>
       <li>beta: {stat.beta}</li>
-      <li>return: {Math.round(stat.rate_of_return * 100*100)/100}%</li>
+      <li>return: {Math.round(stat.rate_of_return *100)/100}%</li>
       <li>risk: {stat.risk}%</li>
     </ul>
   </div>);

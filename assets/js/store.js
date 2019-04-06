@@ -32,15 +32,17 @@ function portfolio(state=[], action) {
     return new_state;
   case 'RECORD_ADD':
   console.log("record add");
-    return {...state, records: [...state.records, action.data]}
+    return {...state, records: [...state.records, action.data]};
   default:
     return state;
   }
 }
 
 function portfolio_stats(state=[], action) {
+  console.log("get_portfolio_stat");
   switch (action.type) {
   case 'PPORTFOLIO_STATS_GET':
+    console.log("stat_get", action.data);
     return action.data;
   default:
     return state;

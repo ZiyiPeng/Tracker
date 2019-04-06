@@ -12,9 +12,12 @@ function StockIndex(props) {
   var stock = "";
   var add_record_form = "";
   if(props.stock) {
-    render_graph(props.stock);
-    stock = RenderStockStat(props);
-    add_record_form = RenderRecordForm(props);
+    try{
+      render_graph(props.stock);
+      stock = RenderStockStat(props);
+      add_record_form = RenderRecordForm(props);
+    }
+    catch(err){}
   }
   return (
     <div>
