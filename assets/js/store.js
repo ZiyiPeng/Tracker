@@ -27,12 +27,12 @@ function portfolio(state=[], action) {
   case 'PPORTFOLIO_GET':
     return action.data;
   case 'RECORD_DELETE':
-    console.log("record delete");
     let record_id = action.data;
     let new_state = Object.assign({}, state, {records: _.filter(state.records, (r)=>r.id!= record_id)});
-    console.log("new state");
-    console.log(new_state);
     return new_state;
+  case 'RECORD_ADD':
+  console.log("record add");
+    return {...state, records: [...state.records, action.data]}
   default:
     return state;
   }
@@ -86,7 +86,6 @@ function login_form(state = login_form0, action) {
 
 
 function root_reducer(state0, action) {
-  //console.log("reducer", state0, action);
 
   let reducer = combineReducers({
     portfolio: portfolio,

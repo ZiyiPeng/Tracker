@@ -9,9 +9,12 @@ import Chart from 'chart.js';
 
 
 function StockIndex(props) {
+  var stock = "";
+  var add_record_form = "";
   if(props.stock) {
-    console.log("has stock")
-    render_graph();
+    render_graph(props.stock);
+    stock = RenderStockStat(props);
+    add_record_form = RenderRecordForm(props);
   }
   return (
     <div>
@@ -20,7 +23,12 @@ function StockIndex(props) {
         <button id="search-submit" onClick={()=>perform_search()}>search</button>
       </div>
       <div>
-        <select id="time-select">
+      "1min", "5min", "15min", "30min", "60min"
+        <select id="time-select" onChange={()=>render_graph(props.stock)}>
+           <option value="5min">5 min interval</option>
+           <option value="15min">15 min interval</option>
+           <option value="30min">30 min interval</option>
+           <option value="60min">60 min interval</option>
            <option value="1d">1 day</option>
            <option value="3m">3 month</option>
            <option value="6m">6 month</option>
@@ -29,21 +37,60 @@ function StockIndex(props) {
         </select>
         <canvas id="stock-history-chart" width="800" height="450"></canvas>
       </div>
+      <div id="stock-stat">
+        {stock}
+      </div>
+      <div>
+        {add_record_form}
+      </div>
     </div>
   );
 }
 
-function RenderStat(props) {
-  console.log(props)
-  let stat = props.stats;
+function RenderStockStat(props) {
+  let stat = props.stock;
   return (
   <div>
     <ul>
+      <li>company: {stat.name}</li>
+      <li>abbreviation: {stat.abbreviation}</li>
       <li>beta: {stat.beta}</li>
-      <li>return: {stat.rate_of_return}%</li>
       <li>risk: {stat.risk}%</li>
+      <li>return: {Math.round(stat.rate_of_return * 100*100)/100}%</li>
     </ul>
   </div>);
+}
+
+function RenderRecordForm(props) {
+  let stock = props.stock;
+  let price = window.stock_price;
+  return (
+    <div>
+      <p>quantity: <input id="quantity" placeholder='0' onInput={()=>update_amount()}></input></p>
+      <p>purchase price: <input id="purchase_price" placeholder='0' onInput={()=>update_amount()}></input></p>
+      <p>total: <input id="amount" readOnly="readonly"></input></p>
+      <button id="add-record-submit" onClick={()=>add_record(props)}>submit</button>
+    </div>
+  );
+}
+
+function add_record(props) {
+  let quantity = document.getElementById("quantity").value;
+  let price = document.getElementById("purchase_price").value;
+  let result = Math.round(parseFloat(quantity)*parseFloat(price)*100)/100
+  let portfolio_id = props.portfolio.id;
+  let abbreviation = props.stock.abbreviation;
+  console.log({"amount": result, "purchased_price": price, "quantity": quantity, "abbreviation": abbreviation, "portfolio_id": portfolio_id});
+  api.add_record(
+    {"amount": result, "purchased_price": price, "quantity": quantity, "abbreviation": abbreviation, "portfolio_id": portfolio_id}
+  );
+}
+
+function update_amount() {
+  let quantity = document.getElementById("quantity").value;
+  let price = document.getElementById("purchase_price").value;
+  let result = Math.round(parseFloat(quantity)*parseFloat(price)*100)/100
+  $("#amount").val(result.toString());
 }
 
 function perform_search() {
@@ -51,10 +98,17 @@ function perform_search() {
   api.prepare_stock(input);
 }
 
-function render_graph() {
-  let time = document.getElementById("time-select").value;
-  let stock_abbrev = document.getElementById("autocomplete").value;
-  render_stock_history(stock_abbrev, time);
+function render_graph(stock) {
+  if(stock) {
+    let time = document.getElementById("time-select").value;
+    let stock_abbrev = document.getElementById("autocomplete").value;
+    if(["5min", "15min", "30min", "60min"].includes(time)) {
+      render_intraday(stock_abbrev, time);
+    }
+    else {
+      render_stock_history(stock_abbrev, time);
+    }
+  }
 }
 
 function get_suggestsions(input){
@@ -86,8 +140,22 @@ function render_stock_history(abbrev, time) {
   });
 }
 
+function render_intraday(abbrev, time) {
+  $.ajax(`http://localhost:4000/api/stock_intraday?abbreviation=${abbrev}&time-span=${time}`, {
+  method: "get",
+  dataType: "json",
+  contentType: "application/json; charset=UTF-8",
+  success: (resp) => {
+    let dates = _.map(Object.keys(resp["prices"]), function(x){return x.split(' ')[1]});
+    let data = _.map(resp["prices"], function(x){return x["4. close"]});
+    linear_graph("stock-history-chart", abbrev, dates, data)
+  },
+  });
+}
+
 function linear_graph(canvas_id, abbrev, x_array, y_array) {
-  new Chart(document.getElementById(canvas_id), {
+  if(window.chart){window.chart.destroy()};
+  window.chart = new Chart(document.getElementById(canvas_id), {
     type: 'line',
     data: {
       labels: x_array,
@@ -101,7 +169,7 @@ function linear_graph(canvas_id, abbrev, x_array, y_array) {
     options: {
       title: {
         display: true,
-        text: 'portfolio value'
+        text: 'stock value'
       }
     }
   });
@@ -114,7 +182,6 @@ function search() {
 
 
 function state2props(state) {
-  console.log("rerender", state);
   return {
     portfolio: state.portfolio,
     stock: state.current_stock

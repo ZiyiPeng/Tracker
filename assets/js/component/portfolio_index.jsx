@@ -23,7 +23,6 @@ function PortfolioIndex(props) {
 }
 
 function RenderStat(props) {
-  console.log(props)
   let stat = props.stats;
   return (
   <div>
@@ -60,7 +59,8 @@ function render_portfolio_history(portfolio_id) {
 }
 
 function linear_graph(canvas_id, abbrev, x_array, y_array) {
-  new Chart(document.getElementById(canvas_id), {
+  if(window.chart1){window.chart1.destroy()};
+  window.chart1 = new Chart(document.getElementById(canvas_id), {
     type: 'line',
     data: {
       labels: x_array,
@@ -81,7 +81,8 @@ function linear_graph(canvas_id, abbrev, x_array, y_array) {
 }
 
 function render_pie_chart(stock_names, data_array) {
-  new Chart(document.getElementById("doughnut-chart"), {
+  if(window.chart2){window.chart2.destroy()};
+  window.chart2 = new Chart(document.getElementById("doughnut-chart"), {
     type: 'doughnut',
     data: {
       labels: stock_names,

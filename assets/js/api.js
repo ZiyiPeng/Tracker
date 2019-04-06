@@ -46,6 +46,18 @@ class TheServer {
     get_portfolio_stats(portfolio_id);
   }
 
+  add_record(params) {
+    this.send_post(
+      "/api/records", {"record": params},
+      (resp) => {
+        store.dispatch({
+          type: 'RECORD_ADD',
+          data: resp.data,
+        });
+      }
+    );
+  }
+
   prepare_stock(abbrev) {
     this.send_post(
       "/api/prepare_stock", {abbreviation: abbrev},
@@ -99,7 +111,6 @@ class TheServer {
   }
 
   get_portfolio_stats(id) {
-    console.log(id);
     this.send_get(
       "/api/portfolio_stats?id="+ id,
       (resp) => {

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 
 export default function RecordList(props) {
+  console.log("recordlist", props)
   var display;
     let task = _.map(props.records, (tt) => <Record key={tt.id} record={tt} />);
     display =
