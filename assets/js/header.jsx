@@ -11,31 +11,50 @@ function Header(props) {
   if (session == null) {
     session_info =
     <div>
-      <p>name:     <input type="name" className="form-control" id="user-name" placeholder="name" value="peng"/></p>
-      <p>password: <input type="password" className="form-control" id="password" placeholder="password" value="P@ssw0rd"/></p>
-      <p><button className="btn btn-secondary" onClick={()=>login()}>Login</button>
-      <Link className="btn btn-secondary" to={"/create_user_form"}> register </Link></p>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+        <h1>Stock Project</h1>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <a className="nav-link active"><Link to={"/portfolio"}>Portfolio</Link></a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link"><Link to={"/stock"}>Stock</Link></a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/users">Profile</a>
+            </li>
+            
+
+          </ul>
+        </div>
+
+      </nav>
+        <div className="col-4" style={{align:'center'}}>
+
+        <p>Username:  <input type="name" className="form-control" id="user-name" placeholder="name" value="peng"/></p>
+        <p>Password:  <input type="password" className="form-control" id="password" placeholder="password" value="P@ssw0rd"/></p>
+
+        <div class="btn-group mr-2" role="group">
+        <button className="btn btn-primary" onClick={()=>login()}>Login</button>
+        </div>
+
+        <div class="btn-group mr-2" role="group">
+        <Link className="btn btn-secondary" to={"/create_user_form"}> register </Link>
+        </div>
+
+        </div>
+
     </div>;
+
+    
   }
   else {
     let user = props.users.find(function(ee){return ee.id == props.session.user_id;});
     api.get_portfolio(user.portfolio_id);
     api.get_portfolio_stats(user.portfolio_id)
     session_info =
-    <div className="container">
-      <div className="row ">
-      <span className="col align-self-start">Logged in as {user.username}</span>
-      <span className="col-md-3 offset-md-3"><Link to={"/"} onClick={() => api.delete_session()}>logout</Link></span>
-      </div>
-      <div>
-        <p><Link to={"/portfolio"}>portfolio</Link></p>
-        <p><Link to={"/stock"}>stock</Link></p>
-      </div>
-    </div>;
-  }
 
-  return <div>
-    <div>
       <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
         <h1>Stock Project</h1>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -61,10 +80,11 @@ function Header(props) {
         </div>
 
       </nav>
+  }
 
+  return <div>
       {session_info}
-    </div>
-  </div>;
+    </div>;
 }
 
 function login() {

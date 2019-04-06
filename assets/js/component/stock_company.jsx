@@ -12,14 +12,22 @@ function Company(props) {
   var body = "";
   let company = props.company;
   if(company) {
-    body =<ul>
-            <li>ceo: {company.ceo}</li>
-            <li>name: {company.company_name}</li>
-            <li>description: {company.description}</li>
-            <li>website: {company.description}</li>
-            <li>sector: {company.sector}</li>
-          </ul>;
+    body =<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{company.company_name}</h5>
+      <p class="card-text">{company.description}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">CEO: {company.ceo}</li>
+      <li class="list-group-item">Sector: {company.sector}</li>
+      <li class="list-group-item">Website: {company.website}</li>
+    </ul>
+  </div>;
   }
+
+
+
+
   return (
     <div>
       {body}

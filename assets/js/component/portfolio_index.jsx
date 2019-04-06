@@ -13,17 +13,23 @@ function PortfolioIndex(props) {
   //api.get_portfolio_stats(props.portfolio.id);
   render_portfolio_history(props.portfolio.id);
   render_portfolio_composition(props.portfolio.id);
-  return (<div className='container-fluid'>
-          <div className="chart-container" style={{position:'relative', height:'30%', width:'70%', float:'left'}}>
-        <canvas id="portfolio-history-chart" width="800" height="450" style={{width:'10%'}}></canvas>
+  return (<div>
+  <div className='row'>
+          <div className="chart-container card" style={{position:'relative', height:'30%', width:'70%', float:'left'}}>
+            <canvas id="portfolio-history-chart" width="800" height="450" style={{width:'10%'}}></canvas>
+          </div>
+          <div className="chart-container card" style={{position:'relative', height:'30%', width:'30%', float:'right'}}>
+            <canvas className="card-body" id="doughnut-chart" width="100px" height="100px"></canvas>
+            <RenderStat className="card-body" stats={props.stats}/>
+          </div>
+
+          </div>
+          <div className="card">
+          <div className="card-body">
+            <RecordList records={props.portfolio.records}/>
+          </div>
         </div>
-        <div className="chart-container" style={{position:'relative', height:'30%', width:'30%', float:'right'}}>
-        <canvas id="doughnut-chart" width="100px" height="100px"></canvas>
         </div>
-        <RenderStat stats={props.stats}/>
-        <RecordList records={props.portfolio.records}/>
-      <p><Link to='/'>back</Link></p>
-  </div>
   )
 }
 
@@ -33,10 +39,11 @@ function RenderStat(props) {
     
 
   <div>
-    <ul>
-      <li>beta: {stat.beta}</li>
-      <li>return: {Math.round(stat.rate_of_return *100)/100}%</li>
-      <li>risk: {stat.risk}%</li>
+    <ul id='stats'>
+      <h3>Statistics:</h3>
+      <li>  Beta: {stat.beta}</li>
+      <li>  Return: {Math.round(stat.rate_of_return * 100)/100}%</li>
+      <li>  Risk: {stat.risk}%</li>
     </ul>
   </div>);
 }
@@ -81,7 +88,7 @@ function linear_graph(canvas_id, abbrev, x_array, y_array) {
     options: {
       title: {
         display: true,
-        text: 'portfolio value'
+        text: 'Portfolio Value'
       }
     }
   });
@@ -104,7 +111,7 @@ function render_pie_chart(stock_names, data_array) {
     options: {
       title: {
         display: true,
-        text: 'portfolio composition'
+        text: 'Portfolio Composition'
       }
     }
   });

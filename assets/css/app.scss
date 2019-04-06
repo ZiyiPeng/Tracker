@@ -1,2 +1,8 @@
 $body-bg: #BBB; // With scss, Bootstrap lets us override colors and stuff.
 @import "~bootstrap/scss/bootstrap";
+
+#stats {
+  border-left: 5px solid skyblue;
+  list-style-type: none;
+  padding: 10px 20px;
+}
