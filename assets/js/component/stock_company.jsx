@@ -18,6 +18,7 @@ function Company(props) {
             <li>description: {company.description}</li>
             <li>website: {company.description}</li>
             <li>sector: {company.sector}</li>
+            <img src={company.logo}></img>
           </ul>;
   }
   return (

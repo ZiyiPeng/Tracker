@@ -21,13 +21,15 @@ defmodule StockprojectWeb.StockView do
   end
 
 #return company financial information
-  def render("company.json", %{company: company}) do
+  def render("company.json", %{company: company, logo: logo}) do
     %{ ceo: company.ceo,
        company_name: company.company_name,
        description: company.description,
        sector: company.sector,
        symbol: company.symbol,
-       website: company.website }
+       website: company.website,
+       logo: logo
+     }
   end
 
   def render("stock_history.json", %{data: data}) do

@@ -30,7 +30,7 @@ function PortfolioIndex(props) {
 function RenderStat(props) {
   let stat = props.stats;
   return (
-    
+
 
   <div>
     <ul>
@@ -47,7 +47,8 @@ function state2props(state) {
   return {
     portfolio: state.portfolio,
     user: state.users,
-    stats: state.portfolio_stats
+    stats: state.portfolio_stats,
+    session: state.session
   };
 }
 
