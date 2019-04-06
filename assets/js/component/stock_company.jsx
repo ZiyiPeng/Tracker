@@ -13,6 +13,7 @@ function Company(props) {
   let company = props.company;
   if(company) {
     body =<div class="card">
+    <img class="card-img-top" src={company.logo} style={{}}></img>
     <div class="card-body">
       <h5 class="card-title">{company.company_name}</h5>
       <p class="card-text">{company.description}</p>
@@ -21,7 +22,6 @@ function Company(props) {
       <li class="list-group-item">CEO: {company.ceo}</li>
       <li class="list-group-item">Sector: {company.sector}</li>
       <li class="list-group-item">Website: {company.website}</li>
-      <img src={company.logo}></img>
     </ul>
   </div>;
 
