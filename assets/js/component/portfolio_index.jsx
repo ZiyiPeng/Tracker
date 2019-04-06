@@ -13,18 +13,25 @@ function PortfolioIndex(props) {
   //api.get_portfolio_stats(props.portfolio.id);
   render_portfolio_history(props.portfolio.id);
   render_portfolio_composition(props.portfolio.id);
-  return<div>
-        <canvas id="portfolio-history-chart" width="800" height="450"></canvas>
-        <canvas id="doughnut-chart" width="300" height="300"></canvas>
+  return (<div className='container-fluid'>
+          <div className="chart-container" style={{position:'relative', height:'30%', width:'70%', float:'left'}}>
+        <canvas id="portfolio-history-chart" width="800" height="450" style={{width:'10%'}}></canvas>
+        </div>
+        <div className="chart-container" style={{position:'relative', height:'30%', width:'30%', float:'right'}}>
+        <canvas id="doughnut-chart" width="100px" height="100px"></canvas>
+        </div>
         <RenderStat stats={props.stats}/>
         <RecordList records={props.portfolio.records}/>
       <p><Link to='/'>back</Link></p>
   </div>
+  )
 }
 
 function RenderStat(props) {
   let stat = props.stats;
   return (
+    
+
   <div>
     <ul>
       <li>beta: {stat.beta}</li>

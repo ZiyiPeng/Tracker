@@ -11,8 +11,8 @@ config :logger, level: :warn
 
 # Configure your database
 config :stockproject, Stockproject.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "stockproject_test",
+  username: "project02",
+  password: "qwer1234kad",
+  database: "project02_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

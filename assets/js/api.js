@@ -1,5 +1,6 @@
 import store from './store';
 
+
 //adapted from https://www.w3schools.com/js/js_cookies.asp
 function getCookie(cname) {
   var name = cname + "=";

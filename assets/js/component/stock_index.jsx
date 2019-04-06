@@ -23,7 +23,6 @@ function StockIndex(props) {
         <button id="search-submit" onClick={()=>perform_search()}>search</button>
       </div>
       <div>
-      "1min", "5min", "15min", "30min", "60min"
         <select id="time-select" onChange={()=>render_graph(props.stock)}>
            <option value="5min">5 min interval</option>
            <option value="15min">15 min interval</option>

@@ -35,7 +35,7 @@ class Root extends React.Component {
         <div>
           <Header />
           <div className="row">
-            <div className="col-8">
+            <div>
               <Route path="/create_user_form" exact={true} render={() =>
                 <CreateUserForm />
               } />

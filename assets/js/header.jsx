@@ -35,10 +35,35 @@ function Header(props) {
   }
 
   return <div>
-    <div  className="text-center">
-      <h1>Stock Project</h1>
-    </div>
+    <div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+        <h1>Stock Project</h1>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <a className="nav-link active"><Link to={"/portfolio"}>Portfolio</Link></a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link"><Link to={"/stock"}>Stock</Link></a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/users">Profile</a>
+            </li>
+            
+
+          </ul>
+
+          <ul className="navbar-nav ml-auto">
+            <li>
+              <a className="nav-link"><Link to={"/"} onClick={() => api.delete_session()}>logout</Link></a>
+            </li>
+          </ul>
+        </div>
+
+      </nav>
+
       {session_info}
+    </div>
   </div>;
 }
 
