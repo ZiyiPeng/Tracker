@@ -21,8 +21,10 @@ function Company(props) {
       <li class="list-group-item">CEO: {company.ceo}</li>
       <li class="list-group-item">Sector: {company.sector}</li>
       <li class="list-group-item">Website: {company.website}</li>
+      <img src={company.logo}></img>
     </ul>
   </div>;
+
   }
 
 

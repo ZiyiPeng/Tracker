@@ -3,6 +3,7 @@ defmodule StockprojectWeb.StockController do
 
   alias Stockproject.Stocks
   alias Stockproject.Stocks.Stock
+  alias StockUtil
 
   action_fallback StockprojectWeb.FallbackController
 
@@ -47,7 +48,8 @@ defmodule StockprojectWeb.StockController do
 
   def look_up_company(conn, %{"abbreviation" => ab}) do
     result = Stoxir.company(ab)
-    render(conn, "company.json", company: result)
+    logo = StockUtil.get_logo(ab)
+    render(conn, "company.json", company: result, logo: logo)
   end
 
   def prepare_stock(conn, %{"abbreviation" => ab}) do
