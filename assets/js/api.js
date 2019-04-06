@@ -41,19 +41,26 @@ class TheServer {
     });
   }
 
-  update_state(portfolio_id) {
-    get_portfolio(portfolio_id);
-    get_portfolio_stats(portfolio_id);
-  }
 
   add_record(params) {
     this.send_post(
       "/api/records", {"record": params},
       (resp) => {
+      console.log(resp);
         store.dispatch({
           type: 'RECORD_ADD',
           data: resp.data,
         });
+        this.send_get(
+          "/api/portfolio_stats/?id="+ window.portfolio_id,
+          (resp) => {
+            console.log("add_get_stat", resp);
+            store.dispatch({
+              type: 'PPORTFOLIO_STATS_GET',
+              data: resp,
+            });
+          }
+        );
       }
     );
   }
@@ -84,6 +91,7 @@ class TheServer {
   }
 
   get_portfolio(id) {
+    window.portfolio_id = id;
     this.send_get(
       "/api/portfolio/"+ id,
       (resp) => {
@@ -101,11 +109,20 @@ class TheServer {
       headers: {"x-auth": getCookie("token")},
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
-      success: () => {
+      success: (resp) => {
         store.dispatch({
           type: 'RECORD_DELETE',
           data: id,
         });
+        this.send_get(
+          "/api/portfolio_stats?id="+ window.portfolio_id,
+          (resp) => {
+            store.dispatch({
+              type: 'PPORTFOLIO_STATS_GET',
+              data: resp,
+            });
+          }
+        );
       }
     });
   }
