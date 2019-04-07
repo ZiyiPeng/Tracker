@@ -6,3 +6,22 @@ $body-bg: #BBB; // With scss, Bootstrap lets us override colors and stuff.
   list-style-type: none;
   padding: 10px 20px;
 }
+
+#signup-b {
+  margin-left: 5px;
+
+}
+
+div {
+  width: 100%
+}
+
+.btn {
+  padding: 30px 150px;
+  overflow: hidden;
+  display: block;
+}
+
+a:link {
+  color: grey;
+}

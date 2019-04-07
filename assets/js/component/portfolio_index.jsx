@@ -13,7 +13,7 @@ function PortfolioIndex(props) {
   //api.get_portfolio_stats(props.portfolio.id);
   render_portfolio_history(props.portfolio.id);
   render_portfolio_composition(props.portfolio.id);
-  return (<div>
+  return (<div className="container" style={{marginBottom:'20px'}}>
   <div className='row'>
           <div className="chart-container card" style={{position:'relative', height:'30%', width:'70%', float:'left'}}>
             <canvas id="portfolio-history-chart" width="800" height="450" style={{width:'10%'}}></canvas>
@@ -24,7 +24,7 @@ function PortfolioIndex(props) {
           </div>
 
           </div>
-          <div className="card">
+          <div className="card row">
           <div className="card-body">
             <RecordList records={props.portfolio.records}/>
           </div>

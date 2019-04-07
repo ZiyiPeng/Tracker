@@ -11,22 +11,22 @@ function Header(props) {
   if (session == null) {
     session_info =
     <div>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-between sticky-top">
         <h1>Stock Project</h1>
 
       </nav>
-        <div className="col-4" style={{align:'center'}}>
 
-        <p>Username:  <input type="name" className="form-control" id="user-name" placeholder="name" value="peng"/></p>
-        <p>Password:  <input type="password" className="form-control" id="password" placeholder="password" value="P@ssw0rd"/></p>
+        <div className="col-4 container" style={{align:'center'}}>
 
-        <div class="btn-group mr-2" role="group">
-        <button className="btn btn-primary" onClick={()=>login()}>Login</button>
-        </div>
+          <p>Username:  <input type="name" className="form-control" id="user-name" placeholder="name" value="peng"/></p>
+          <p>Password:  <input type="password" className="form-control" id="password" placeholder="password" value="P@ssw0rd"/></p>
 
-        <div class="btn-group mr-2" role="group">
-        <Link className="btn btn-secondary" to={"/create_user_form"}> register </Link>
-        </div>
+          <div>
+            <div>
+              <button className="btn btn-primary" id="login-b" onClick={()=>login()}>Login</button>
+              <Link className="btn btn-secondary" id="signup-b" to={"/create_user_form"}> register </Link>
+            </div>
+          </div>
 
         </div>
 
@@ -40,19 +40,18 @@ function Header(props) {
     api.get_portfolio(user.portfolio_id);
     api.get_portfolio_stats(user.portfolio_id)
     session_info =
-
-      <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-        <h1>Stock Project</h1>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+    <div>
+      <nav class="navbar navbar-expand-md bg-light navbar-dark sticky-top">
+        <div><h1 style={{font: 'Sofia'}}>Stock Project</h1></div>
+        <div className="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link active"><Link to={"/portfolio"}>Portfolio</Link></a>
+            <li className="nav-item">
+              <a className="nav-link"><Link to={"/portfolio"}>Portfolio</Link></a>
             </li>
             <li className="nav-item">
               <a className="nav-link"><Link to={"/stock"}>Stock</Link></a>
             </li>
           </ul>
-
           <ul className="navbar-nav ml-auto">
             <li>
               <a className="nav-link"><Link to={"/"} onClick={() => api.delete_session()}>logout</Link></a>
@@ -61,6 +60,7 @@ function Header(props) {
         </div>
 
       </nav>
+    </div>
   }
 
   return <div>

@@ -20,36 +20,41 @@ function StockIndex(props) {
     catch(err){}
   }
   return (
-    <div>
-      <div className="ui-widget">
-        <input id="autocomplete"  class="form-control mr-sm-2" placeholder="Search" style={{width: "95%"}} onInput={()=>search()}></input>
-        <button id="search-submit" class="btn btn-outline-primary" style={{width: "15%", float: "right"}} onClick={()=>perform_search()}>search</button>
+    <div class="container" style={{marginBottom:'20px'}}>
+      <div id="search-stock" className="row" style={{marginTop:'5px'}}>
+        <input id="autocomplete"  class="form-control mr-sm-2" style={{height:'50px',width: "60%", float:'right'}} placeholder="Search" onInput={()=>search()}></input>
+        <select id="time-select" onChange={()=>render_graph(props.stock)} style={{height:'50px',width: "24%", float:'right'}}className="custom-select col-sm-2" >
+          <option value="2y">2 year</option>
+          <option value="1y">1 year</option>
+          <option value="6m">6 month</option>
+          <option value="3m">3 month</option>
+          <option value="1d">1 day</option>
+          <option value="60min">60 minutes</option>
+          <option value="30min">30 minutes </option>
+          <option value="15min">15 minutes</option>
+          <option value="5min">5 minutes</option> 
+        </select>
+
+        <button id="search-submit" class="btn btn-outline-primary" style={{width: "14%", float:'right',marginLeft:'5px', float:'right'}} onClick={()=>perform_search()}>search</button>
       </div>
       
-    <div>
-      
-
-        <select id="time-select" onChange={()=>render_graph(props.stock)}>
-           <option value="5min">5 min interval</option>
-           <option value="15min">15 min interval</option>
-           <option value="30min">30 min interval</option>
-           <option value="60min">60 min interval</option>
-           <option value="1d">1 day</option>
-           <option value="3m">3 month</option>
-           <option value="6m">6 month</option>
-           <option value="1y">1 year</option>
-           <option value="2y">2 year</option>
-        </select>
+      <div style={{width:'73%', float:'left'}}>
         <canvas id="stock-history-chart" width="800" height="450"></canvas>
       </div>
-      <div id="stock-stat">
+
+      <div className="card"  style={{width:'25%', float:'right', marginTop:'15px'}}>
+      <div className="card-body" id="stock-stat">
         {stock}
       </div>
-      <Link to={"/stock_company"} onClick={()=>api.get_company(props.stock.abbreviation)}>company info</Link>
-      <div>
-        {add_record_form}
       </div>
+      
+      <div className="card"  style={{width:'25%', float:'right', marginTop:'15px'}}>
+        <div className="card-body">
+          {add_record_form}
+        </div>
+        </div>
     </div>
+
   );
 }
 
@@ -58,11 +63,13 @@ function RenderStockStat(props) {
   return (
   <div>
     <ul>
-      <li>company: {stat.name}</li>
-      <li>abbreviation: {stat.abbreviation}</li>
-      <li>beta: {stat.beta}</li>
+      <h5>Stock Information </h5>
+      <li>Company Name: {stat.name}</li>
+      <li>Abbreviation: {stat.abbreviation}</li>
+      <li>Beta: {stat.beta}</li>
       <li>risk: {stat.risk}%</li>
-      <li>return: {Math.round(stat.rate_of_return * 100*100)/100}%</li>
+      <li>Return: {Math.round(stat.rate_of_return * 100*100)/100}%</li>
+      <li><Link to={"/stock_company"} onClick={()=>api.get_company(props.stock.abbreviation)}>Company Info</Link></li>
     </ul>
   </div>);
 }
@@ -72,10 +79,13 @@ function RenderRecordForm(props) {
   let price = window.stock_price;
   return (
     <div>
-      <p>quantity: <input id="quantity" placeholder='0' onInput={()=>update_amount()}></input></p>
-      <p>purchase price: <input id="purchase_price" placeholder='0' onInput={()=>update_amount()}></input></p>
-      <p>total: <input id="amount" readOnly="readonly"></input></p>
+      <ul>
+      <h5>Add to Portfolio</h5>
+      <p>Quantity: <input id="quantity" placeholder='0' onInput={()=>update_amount()}></input></p>
+      <p>Price /stock: $<input id="purchase_price" placeholder='0' onInput={()=>update_amount()}></input></p>
+      <p>Total: <input id="amount" readOnly="readonly"></input></p>
       <button id="add-record-submit" onClick={()=>add_record(props)}>submit</button>
+      </ul>
     </div>
   );
 }
