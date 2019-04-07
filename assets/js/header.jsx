@@ -3,7 +3,8 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import api from './api'
+import api from './api';
+import Popup from 'reactjs-popup';
 
 function Header(props) {
   let {session} = props;
@@ -24,10 +25,23 @@ function Header(props) {
           <div>
             <div>
               <button className="btn btn-primary" id="login-b" onClick={()=>login()}>Login</button>
-              <Link className="btn btn-secondary" id="signup-b" to={"/create_user_form"}> register </Link>
-            </div>
-          </div>
+              
 
+
+              <Popup trigger={<button className="btn btn-secondary" id="signup-b"> Register </button>} modal closeOnDcumentClick>
+                <div>
+                  <form>
+                  <p>Username:      <input id="create-user-name" type="text" /></p>
+                  <p>Password:  <input id="create-user-password" type="password" /></p>
+                  <p><Link to='/'><button className="btn btn-secondary" onClick={() => {api.create_user();}}>Register</button></Link></p>
+                  </form>
+                </div>
+              </Popup>
+
+
+            </div>
+
+          </div>
         </div>
 
     </div>;
@@ -83,3 +97,5 @@ function state2props(state) {
 }
 
 export default connect(state2props)(Header);
+
+

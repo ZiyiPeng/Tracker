@@ -81,10 +81,28 @@ function RenderRecordForm(props) {
     <div>
       <ul>
       <h5>Add to Portfolio</h5>
-      <p>Quantity: <input id="quantity" placeholder='0' onInput={()=>update_amount()}></input></p>
-      <p>Price /stock: $<input id="purchase_price" placeholder='0' onInput={()=>update_amount()}></input></p>
-      <p>Total: <input id="amount" readOnly="readonly"></input></p>
-      <button id="add-record-submit" onClick={()=>add_record(props)}>submit</button>
+      <div class="input-group" style={{marginTop:'15px'}}>
+        <div class="input-group-prepend">
+          <span class="input-group-text">Quantity</span>
+          <input id="quantity" type="text" className="form-control" onInput={()=>update_amount()}></input>
+        </div>
+      </div>
+
+      <div class="input-group" style={{marginTop:'15px'}}>
+        <div class="input-group-prepend">
+          <span class="input-group-text">Price ($)  </span>
+          <input id="purchase_price" type="text" className="form-control" onInput={()=>update_amount()}></input>
+        </div>
+      </div>
+
+      <div class="input-group" style={{marginTop:'15px'}}>
+        <div class="input-group-prepend">
+          <span class="input-group-text">Total</span>
+          <input id="amount" readOnly="readonly" className="form-control"></input>
+        </div>
+      </div>
+
+      <button style={{marginTop:'15px'}} id="add-record-submit" className="btn btn-primary" onClick={()=>add_record(props)}>submit</button>
       </ul>
     </div>
   );
@@ -100,6 +118,9 @@ function add_record(props) {
   api.add_record(
     {"amount": result, "purchased_price": price, "quantity": quantity, "abbreviation": abbreviation, "portfolio_id": portfolio_id}
   );
+  document.getElementById("quantity").value = 0;
+  document.getElementById("purchase_price").value = 0;
+  $("#amount").val("0");
 }
 
 function update_amount() {

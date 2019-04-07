@@ -60,6 +60,7 @@ class TheServer {
               type: 'PPORTFOLIO_STATS_GET',
               data: resp,
             });
+            alert("Success");
           }
         );
       }

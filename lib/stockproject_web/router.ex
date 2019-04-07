@@ -21,7 +21,12 @@ defmodule StockprojectWeb.Router do
   scope "/", StockprojectWeb do
     pipe_through :browser
     get "/", PageController, :index
+    get "/stock_company", PageController, :index
     get "/portfolio", PageController, :index
+    get "/stock", PageController, :index
+    get "/create_user_form", PageController, :index
+
+
   end
 
   scope "/api" do
