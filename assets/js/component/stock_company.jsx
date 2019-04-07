@@ -12,17 +12,22 @@ function Company(props) {
   var body = "";
   let company = props.company;
   if(company) {
-    body =<div class="card">
-    <img class="card-img-top" src={company.logo} style={{}}></img>
+    body =
+    <div>
+    <div class="card">
     <div class="card-body">
+    <div style={{width: '85%' , float: 'left'}}>
       <h5 class="card-title">{company.company_name}</h5>
       <p class="card-text">{company.description}</p>
+    </div>
+    <div><img class="card-img-top" src={company.logo} style={{width: '12%' , float: 'right'}}></img></div>
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">CEO: {company.ceo}</li>
       <li class="list-group-item">Sector: {company.sector}</li>
       <li class="list-group-item">Website: {company.website}</li>
     </ul>
+  </div>
   </div>;
 
   }

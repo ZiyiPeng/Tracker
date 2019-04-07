@@ -13,21 +13,6 @@ function Header(props) {
     <div>
       <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
         <h1>Stock Project</h1>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link active"><Link to={"/portfolio"}>Portfolio</Link></a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link"><Link to={"/stock"}>Stock</Link></a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/users">Profile</a>
-            </li>
-            
-
-          </ul>
-        </div>
 
       </nav>
         <div className="col-4" style={{align:'center'}}>
@@ -50,7 +35,8 @@ function Header(props) {
     
   }
   else {
-    let user = props.users.find(function(ee){return ee.id == props.session.user_id;});
+    let user = props.users.find(function(ee)
+    {return ee.id == props.session.user_id;});
     api.get_portfolio(user.portfolio_id);
     api.get_portfolio_stats(user.portfolio_id)
     session_info =
@@ -65,11 +51,6 @@ function Header(props) {
             <li className="nav-item">
               <a className="nav-link"><Link to={"/stock"}>Stock</Link></a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/users">Profile</a>
-            </li>
-            
-
           </ul>
 
           <ul className="navbar-nav ml-auto">

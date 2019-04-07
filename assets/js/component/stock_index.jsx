@@ -22,10 +22,13 @@ function StockIndex(props) {
   return (
     <div>
       <div className="ui-widget">
-        <input id="autocomplete" onInput={()=>search()}></input>
-        <button id="search-submit" onClick={()=>perform_search()}>search</button>
+        <input id="autocomplete"  class="form-control mr-sm-2" placeholder="Search" style={{width: "95%"}} onInput={()=>search()}></input>
+        <button id="search-submit" class="btn btn-outline-primary" style={{width: "15%", float: "right"}} onClick={()=>perform_search()}>search</button>
       </div>
-      <div>
+      
+    <div>
+      
+
         <select id="time-select" onChange={()=>render_graph(props.stock)}>
            <option value="5min">5 min interval</option>
            <option value="15min">15 min interval</option>
