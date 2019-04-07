@@ -19,13 +19,13 @@ function Header(props) {
 
         <div className="col-4 container" style={{align:'center'}}>
 
-          <p>Username:  <input type="name" className="form-control" id="user-name" placeholder="name" value="peng"/></p>
-          <p>Password:  <input type="password" className="form-control" id="password" placeholder="password" value="P@ssw0rd"/></p>
+          <p>Username:  <input type="name" className="form-control" id="user-name" placeholder="name"/></p>
+          <p>Password:  <input type="password" className="form-control" id="password" placeholder="password"/></p>
 
           <div>
             <div >
               <button className="btn btn-primary" id="login-b" onClick={()=>login()}>Login</button>
-              
+
 
 
               <Popup contentStyle={{width:'20%', background:'lightblue'}} trigger={<button className="btn btn-secondary" id="signup-b"> Register </button>} modal closeOnDcumentClick>
@@ -45,7 +45,7 @@ function Header(props) {
 
     </div>;
 
-    
+
   }
   else {
     let user = props.users.find(function(ee)
@@ -96,5 +96,3 @@ function state2props(state) {
 }
 
 export default connect(state2props)(Header);
-
-
