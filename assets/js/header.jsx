@@ -23,18 +23,17 @@ function Header(props) {
           <p>Password:  <input type="password" className="form-control" id="password" placeholder="password" value="P@ssw0rd"/></p>
 
           <div>
-            <div>
+            <div >
               <button className="btn btn-primary" id="login-b" onClick={()=>login()}>Login</button>
               
 
 
-              <Popup trigger={<button className="btn btn-secondary" id="signup-b"> Register </button>} modal closeOnDcumentClick>
-                <div>
-                  <form>
-                  <p>Username:      <input id="create-user-name" type="text" /></p>
-                  <p>Password:  <input id="create-user-password" type="password" /></p>
-                  <p><Link to='/'><button className="btn btn-secondary" onClick={() => {api.create_user();}}>Register</button></Link></p>
-                  </form>
+              <Popup contentStyle={{width:'20%', background:'lightblue'}} trigger={<button className="btn btn-secondary" id="signup-b"> Register </button>} modal closeOnDcumentClick>
+                <div >
+                  <h4 style={{textAlign:'center'}}>Sign Up</h4>
+                  <p className="content">Username:      <input id="create-user-name" className="form-control" type="text" /></p>
+                  <p className="content">Password:  <input id="create-user-password" className="form-control" type="password" /></p>
+                  <p><Link to='/'><button className="btn btn-primary" style={{float:'right'}} onClick={() => {api.create_user();}}>Create</button></Link></p>
                 </div>
               </Popup>
 
