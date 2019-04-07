@@ -42,13 +42,13 @@ function StockIndex(props) {
         <canvas id="stock-history-chart" width="800" height="450"></canvas>
       </div>
 
-      <div className="card"  style={{width:'25%', float:'right', marginTop:'15px'}}>
+      <div className="card"  style={{width:'25%', float:'right', marginTop:'15px', border: 'none'}}>
       <div className="card-body" id="stock-stat">
         {stock}
       </div>
       </div>
       
-      <div className="card"  style={{width:'25%', float:'right', marginTop:'15px'}}>
+      <div className="card"  style={{width:'25%', float:'right', marginTop:'15px', border: 'none'}}>
         <div className="card-body">
           {add_record_form}
         </div>
