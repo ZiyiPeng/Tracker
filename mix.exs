@@ -49,6 +49,7 @@ defmodule Stockproject.MixProject do
       {:stoxir, "~> 0.1.1"},
       {:httpoison, "~> 1.5"},
       { :statistics, "~> 0.5.0"},
+      {:math, "~> 0.3.0"},
     ]
   end
 

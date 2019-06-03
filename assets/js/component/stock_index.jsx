@@ -149,7 +149,7 @@ function render_graph(stock) {
 }
 
 function get_suggestsions(input){
-  $.ajax(`http://localhost:4000/api/stock_search?input=${input}`, {
+  $.ajax(`http://analysis.zy-peng.com/api/stock_search?input=${input}`, {
   method: "get",
   dataType: "json",
   contentType: "application/json; charset=UTF-8",
@@ -157,7 +157,7 @@ function get_suggestsions(input){
     let option = _.map(resp["best_matches"], function(e) {
       return {label: e["1. symbol"] + " (" + e["2. name"] + ")", value: e["1. symbol"]}
     });
-    $( "#autocomplete" ).autocomplete({
+    $("#autocomplete").autocomplete({
       source: option
     });
   },
@@ -165,7 +165,7 @@ function get_suggestsions(input){
 }
 
 function render_stock_history(abbrev, time) {
-  $.ajax(`http://localhost:4000/api/stock_history?abbreviation=${abbrev}&time-span=${time}`, {
+  $.ajax(`http://analysis.zy-peng.com/api/stock_history?abbreviation=${abbrev}&time-span=${time}`, {
   method: "get",
   dataType: "json",
   contentType: "application/json; charset=UTF-8",
@@ -178,7 +178,7 @@ function render_stock_history(abbrev, time) {
 }
 
 function render_intraday(abbrev, time) {
-  $.ajax(`http://localhost:4000/api/stock_intraday?abbreviation=${abbrev}&time-span=${time}`, {
+  $.ajax(`http://analysis.zy-peng.com/api/stock_intraday?abbreviation=${abbrev}&time-span=${time}`, {
   method: "get",
   dataType: "json",
   contentType: "application/json; charset=UTF-8",

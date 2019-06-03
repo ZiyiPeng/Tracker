@@ -68,9 +68,8 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Configure your database
 config :stockproject, Stockproject.Repo,
-  username: "project02",
-  password: "qwer1234kad",
-  database: "project02_dev",
-  hostname: "127.0.0.1",
-  port: 5432,
+  username: "tracker3",
+  password: "P@ssw0rd",
+  database: "stockproject_dev",
+  hostname: "localhost",
   pool_size: 10

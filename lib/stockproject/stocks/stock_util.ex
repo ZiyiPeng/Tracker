@@ -6,16 +6,17 @@ defmodule StockUtil do
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     close = Enum.map(data, fn x -> x["close"] end)
-    risk = Float.round(Statistics.stdev(close), 2)
+    risk = Float.round(Statistics.stdev(close)/Statistics.mean(close) * 100, 2)
     risk
   end
 
   #get the annual rate of return
   def get_annual_ror(abbreviation) do
-    url = "https://api.iextrading.com/1.0/stock/#{abbreviation}/chart/1y"
+    url = "https://api.iextrading.com/1.0/stock/#{abbreviation}/chart/2y"
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     ror=List.last(data)["changeOverTime"]
+    ror = Math.pow(1+ror, 0.5) -1
     Float.round(ror, 5)
   end
 

@@ -26,4 +26,9 @@ defmodule StockprojectWeb.FallbackController do
     |> send_resp(:unprocessable_entity, Jason.encode!(%{error: "auth failed"}))
   end
 
+  def call(conn, {:error, "invalid user-identifier"}) do
+    conn
+    |> put_resp_header("content-type", "application/json; charset=UTF-8")
+    |> send_resp(:unprocessable_entity, Jason.encode!(%{error: "auth failed"}))
+  end
 end

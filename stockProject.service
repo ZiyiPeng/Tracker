@@ -1,0 +1,16 @@
+[Unit]
+Description=Task Tracker
+
+[Service]
+Type=simple
+User=root
+Group=root
+Restart=on-failure
+Environment=MIX_ENV=prod "PORT=6003"
+Environment=LANG=en_US.UTF-8
+
+WorkingDirectory=/home/stockProject/
+ExecStart=/home/stockProject/start.sh
+
+[Install]
+WantedBy=multi-user.target

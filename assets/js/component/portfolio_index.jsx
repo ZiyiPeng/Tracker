@@ -42,7 +42,7 @@ function RenderStat(props) {
     <ul id='stats'>
       <h3>Statistics:</h3>
       <li>  Beta: {stat.beta}</li>
-      <li>  Return: {Math.round(stat.rate_of_return * 100)/100}%</li>
+      <li>  Return: {Math.round(stat.rate_of_return * 100 * 100)/100}%</li>
       <li>  Risk: {stat.risk}%</li>
     </ul>
   </div>);
@@ -61,7 +61,7 @@ function state2props(state) {
 
 
 function render_portfolio_history(portfolio_id) {
-  $.ajax(`http://localhost:4000/api/portfolio_history?id=${portfolio_id}`, {
+  $.ajax(`http://analysis.zy-peng.com/api/portfolio_history?id=${portfolio_id}`, {
   method: "get",
   dataType: "json",
   contentType: "application/json; charset=UTF-8",
@@ -119,7 +119,7 @@ function render_pie_chart(stock_names, data_array) {
 }
 
 function render_portfolio_composition(portfolio_id) {
-  $.ajax(`http://localhost:4000/api/portfolio_stats?id=${portfolio_id}`, {
+  $.ajax(`http://analysis.zy-peng.com/api/portfolio_stats?id=${portfolio_id}`, {
   method: "get",
   dataType: "json",
   contentType: "application/json; charset=UTF-8",
