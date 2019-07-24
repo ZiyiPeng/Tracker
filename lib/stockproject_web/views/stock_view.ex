@@ -14,7 +14,8 @@ defmodule StockprojectWeb.StockView do
     %{id: stock.id,
       name: stock.name,
       abbreviation: stock.abbreviation,
-      risk: stock.risk,
+      price_fluc: stock.price_fluc,
+      return_fluc: stock.return_fluc,
       rate_of_return: stock.rate_of_return,
       beta: stock.beta,
       modified_date: stock.modified_date}

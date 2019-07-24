@@ -32,12 +32,12 @@ function StockIndex(props) {
           <option value="60min">60 minutes</option>
           <option value="30min">30 minutes </option>
           <option value="15min">15 minutes</option>
-          <option value="5min">5 minutes</option> 
+          <option value="5min">5 minutes</option>
         </select>
 
         <button id="search-submit" class="btn btn-outline-primary" style={{width: "14%", float:'right',marginLeft:'5px', float:'right'}} onClick={()=>perform_search()}>search</button>
       </div>
-      
+
       <div style={{width:'73%', float:'left'}}>
         <canvas id="stock-history-chart" width="800" height="450"></canvas>
       </div>
@@ -47,7 +47,7 @@ function StockIndex(props) {
         {stock}
       </div>
       </div>
-      
+
       <div className="card"  style={{width:'25%', float:'right', marginTop:'15px', border: 'none'}}>
         <div className="card-body">
           {add_record_form}
@@ -67,8 +67,9 @@ function RenderStockStat(props) {
       <li>Company Name: {stat.name}</li>
       <li>Abbreviation: {stat.abbreviation}</li>
       <li>Beta: {stat.beta}</li>
-      <li>risk: {stat.risk}%</li>
-      <li>Return: {Math.round(stat.rate_of_return * 100*100)/100}%</li>
+      <li>price flucuation: {stat.price_fluc}%</li>
+      <li>return fluctuation: {stat.return_fluc}%</li>
+      <li>Average Annual Return: {Math.round(stat.rate_of_return * 100*100)/100}%</li>
       <li><Link to={"/stock_company"} onClick={()=>api.get_company(props.stock.abbreviation)}>Company Info</Link></li>
     </ul>
   </div>);

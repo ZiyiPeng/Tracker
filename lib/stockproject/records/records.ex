@@ -121,11 +121,12 @@ defmodule Stockproject.Records do
   end
 
   #%{abbrev, risk, beta, ror}
+  #risk is unweighted
   def calc_weighted_stats(record_id, total) do
     record = get_record(record_id)
     stock = Stockproject.Stocks.get_stock!(record.stock_id)
     weight = record.amount / total
-    risk = stock.risk * weight
+    risk = stock.risk
     beta = stock.beta * weight
     ror = stock.rate_of_return * weight
     %{abbreviation: stock.abbreviation, risk: risk, beta: beta, ror: ror, weight: weight}

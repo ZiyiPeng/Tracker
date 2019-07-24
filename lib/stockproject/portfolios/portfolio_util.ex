@@ -13,11 +13,37 @@ defmodule PortfolioUtil do
     total = Enum.reduce(portfolio.records, 0, fn x, acc -> acc + x.amount end)
     #[%{name, risk, beta, ror, weight}]
     stats = Enum.reduce(portfolio.records, [], fn x, acc -> acc ++ [Records.calc_weighted_stats(x.id, total)] end)
-    risk = Enum.reduce(stats, 0, fn x, acc -> x.risk + acc end)
     beta = Enum.reduce(stats, 0, fn x, acc -> x.beta + acc end)
     ror = Enum.reduce(stats, 0, fn x, acc -> x.ror + acc end)
-    comp = Enum.reduce(stats, [], fn x, acc -> acc ++ [%{abbreviation: x.abbreviation, weight: x.weight}] end)
+    comp = Enum.reduce(stats, [], fn x, acc -> acc ++ [%{abbreviation: x.abbreviation, weight: x.weight, risk: x.risk}] end)
+
+    #form a 2x2 variance-covariance matrix
+    risk = Enum.reduce(stats, 0, fn x, acc -> x.risk + acc end)
+
+
+
+
     %{composition: comp, risk: risk, beta: beta, rate_of_return: ror}
+  end
+
+  #form a 2x2 variance-covariance matrix
+  def calc_weighted_risk() do
+
+  end
+
+  #calculate covariance between two list of stock returns
+  def calc_covariance(l1,l2) do
+    size1 = length(l1)
+    size2 = length(l2)
+    if size1 == size2 do
+      Statistics.covariance(l1, l2)
+    #some stock's IPO is within 2 yrs, so that data points are not enough
+    else
+      size = min(size1, size2)
+      l1 = Enum.take(l1, -size)
+      l2 = Enum.take(l2, -size)
+      Statistics.covariance(l1, l2)
+    end
   end
 
 #get the composition of this portfolio [%{abbreviation, weight}]
