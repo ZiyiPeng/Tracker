@@ -17,7 +17,7 @@ defmodule PortfolioUtil do
     ror = Enum.reduce(stats, 0, fn x, acc -> x.ror + acc end)
     comp = Enum.reduce(stats, [], fn x, acc -> acc ++ [%{abbreviation: x.abbreviation, weight: x.weight, risk: x.risk}] end)
 
-    #form a 2x2 variance-covariance matrix
+    #form a 2x2 variance-covariance matrix (2xcov x std1 x std2)
     risk = Enum.reduce(stats, 0, fn x, acc -> x.risk + acc end)
 
 
@@ -27,8 +27,13 @@ defmodule PortfolioUtil do
   end
 
   #form a 2x2 variance-covariance matrix
-  def calc_weighted_risk() do
+  #[{abbrev: {closing_price:..., ror: ...}}]
+  def form_list_return_matrix(id) do
+    portfolio = Stockproject.Portfolios.get_portfolio(id)
+    stocks = Enum.map(portfolio.records, fn x -> [Record.stock_id] end)
+    rors = Enum.reduce(stocks, [], Enum.map(stocks, fn x -> [StockUtil.get_list_of_ror(x)] end))
 
+    #//%{x: column, y: column}
   end
 
   #calculate covariance between two list of stock returns

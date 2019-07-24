@@ -1,11 +1,10 @@
 require Integer
 defmodule StockUtil do
-
-
   # if the IPO is atleast 2 years ago, use stdev of annual rate of Returns
   # if not enough data points can be found, use stdev of closing prices
   def calc_return_fluctuation(abbreviation) do
-    url = "https://api.iextrading.com/1.0/stock/#{abbreviation}/chart/2y"
+    token=Application.fetch_env!(:stockproject, :iex_token)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/2y?token=#{token}"
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     closes = Enum.map(data, fn x -> x["close"] end)
@@ -20,7 +19,7 @@ defmodule StockUtil do
       risk
     else
       IO.puts("invalid")
-      url = "https://api.iextrading.com/1.0/stock/#{abbreviation}/chart/1y"
+      url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/2y?token=#{token}"
       resp = HTTPoison.get!(url)
       data = Jason.decode!(resp.body)
       close = Enum.map(data, fn x -> x["close"] end)
@@ -30,7 +29,8 @@ defmodule StockUtil do
   end
 
   def calc_price_fluctuation(abbreviation) do
-    url = "https://api.iextrading.com/1.0/stock/#{abbreviation}/chart/1y"
+    token=Application.fetch_env!(:stockproject, :iex_token)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/1y?token=#{token}"
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     close = Enum.map(data, fn x -> x["close"] end)
@@ -39,7 +39,8 @@ defmodule StockUtil do
   end
 
   def get_annual_ror(abbrev) do
-    url = "https://api.iextrading.com/1.0/stock/#{abbrev}/chart/2y"
+    token=Application.fetch_env!(:stockproject, :iex_token)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbrev}/chart/2y?token=#{token}"
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     #start idx of second year data
@@ -67,7 +68,8 @@ defmodule StockUtil do
   end
 
   def get_list_of_ror(abbrev) do
-    url = "https://api.iextrading.com/1.0/stock/#{abbrev}/chart/2y"
+    token=Application.fetch_env!(:stockproject, :iex_token)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbrev}/chart/2y?token=#{token}"
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     closes = Enum.map(data, fn x -> x["close"] end)
@@ -86,7 +88,8 @@ defmodule StockUtil do
 
   #get the average annual rate of return
   def get_annual_change(abbreviation) do
-    url = "https://api.iextrading.com/1.0/stock/#{abbreviation}/stats"
+    token=Application.fetch_env!(:stockproject, :iex_token)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/stats?token=#{token}"
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     ror=data["year1ChangePercent"]
@@ -114,19 +117,22 @@ defmodule StockUtil do
   end
 
   def get_logo(abbrev) do
-    resp = HTTPoison.get!("https://api.iextrading.com/1.0/stock/#{abbrev}/logo")
+    token=Application.fetch_env!(:stockproject, :iex_token)
+    resp = HTTPoison.get!("https://cloud.iexapis.com/stable/stock/#{abbrev}/logo?token=#{token}")
     data = Jason.decode!(resp.body)
     data["url"]
   end
 
   def get_current_price(abbrev) do
-    url = "https://api.iextrading.com/1.0/stock/#{abbrev}/price"
+    token=Application.fetch_env!(:stockproject, :iex_token)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbrev}/price?token=#{token}"
     resp = HTTPoison.get!(url)
     Jason.decode!(resp.body)
   end
 
   def get_history(abbrev, time_span) do
-    url = "https://api.iextrading.com/1.0/stock/#{abbrev}/chart/#{time_span}"
+    token=Application.fetch_env!(:stockproject, :iex_token)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbrev}/chart/#{time_span}?token=#{token}"
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     Enum.map(data, fn x -> %{close: x["close"], date: x["date"]} end)
