@@ -26,6 +26,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   3. IEX Cloud charges its customers based on the number of request each of them make.  We will adopt Nebulex, a  
      caching library, to reduce number of api call made to IEX Cloud. Detail about Nebulex can be found here:
      https://hexdocs.pm/nebulex/getting-started.html#inserting-entries
-  Status:
+  
+  *Status:
      Web application is no longer available. All endpoints except /api/stat and /api/logo are still functioning. 
      We will restore the application once the caching feature is finished
