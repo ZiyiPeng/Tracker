@@ -33,6 +33,7 @@ defmodule Stockproject.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:nebulex, "~> 1.1"},
       {:phoenix, "~> 1.4.0"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
@@ -46,7 +47,6 @@ defmodule Stockproject.MixProject do
       {:distillery, "~> 2.0"},
       {:argon2_elixir, "~> 1.3"},
       {:comeonin, "~> 4.1"},
-      {:stoxir, "~> 0.1.1"},
       {:httpoison, "~> 1.5"},
       { :statistics, "~> 0.5.0"},
       {:math, "~> 0.3.0"},

@@ -112,8 +112,11 @@ defmodule StockUtil do
 
 #get stock's beta and name
   def get_info(abbreviation) do
-    resp = Stoxir.key_stats(abbreviation)
-    %{beta: resp.beta, name: resp.company_name}
+    token=Application.fetch_env!(:stockproject, :iex_token)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/stats?token=#{token}"
+    resp = HTTPoison.get!(url)
+    stat = Jason.decode!(resp.body)
+    %{beta: stat["beta"], name: stat["companyName"]}
   end
 
   def get_logo(abbrev) do

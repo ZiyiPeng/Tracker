@@ -22,6 +22,10 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Configuration for nebulex cache
+config :stockproject, Stockproject.Cache,
+  gc_interval: 86_400 # 24 hrs
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

@@ -7,8 +7,11 @@ defmodule Stockproject.Application do
 
   def start(_type, _args) do
     import Supervisor.Spec
+    import Supervisor.Spec
     # List all child processes to be supervised
     children = [
+      # Start the nebulex Cache
+      supervisor(Stockproject.Cache, []),
       # Start the Ecto repository
       Stockproject.Repo,
       # Start the endpoint when the application starts
