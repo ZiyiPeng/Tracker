@@ -21,8 +21,6 @@ defmodule PortfolioUtil do
     risk = Enum.reduce(stats, 0, fn x, acc -> x.risk + acc end)
 
 
-
-
     %{composition: comp, risk: risk, beta: beta, rate_of_return: ror}
   end
 

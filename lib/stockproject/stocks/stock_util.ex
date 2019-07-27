@@ -5,6 +5,7 @@ defmodule StockUtil do
   def calc_return_fluctuation(abbreviation) do
     token=Application.fetch_env!(:stockproject, :iex_token)
     url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/2y?token=#{token}"
+    IO.puts(url)
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     closes = Enum.map(data, fn x -> x["close"] end)
@@ -19,11 +20,7 @@ defmodule StockUtil do
       risk
     else
       IO.puts("invalid")
-      url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/2y?token=#{token}"
-      resp = HTTPoison.get!(url)
-      data = Jason.decode!(resp.body)
-      close = Enum.map(data, fn x -> x["close"] end)
-      risk = Float.round(Statistics.stdev(close), 4)
+      risk = Float.round(Statistics.stdev(closes), 4)
       risk
     end
   end
@@ -128,9 +125,10 @@ defmodule StockUtil do
 
   def get_current_price(abbrev) do
     token=Application.fetch_env!(:stockproject, :iex_token)
-    url = "https://cloud.iexapis.com/stable/stock/#{abbrev}/price?token=#{token}"
+    url = "https://cloud.iexapis.com/stable/stock/#{abbrev}/quote?token=#{token}"
     resp = HTTPoison.get!(url)
-    Jason.decode!(resp.body)
+    data=Jason.decode!(resp.body)
+    data["latestPrice"]
   end
 
   def get_history(abbrev, time_span) do
@@ -150,13 +148,14 @@ defmodule StockUtil do
   end
 
 #%{metadata: data.meta, price: data.price}
-  def search_intraday(abbrev, time) do
+#interval: 1min, 5min, 15min, 30min, 60min
+  def search_intraday(abbrev, interval) do
     key = "7E3XEF8EJVICCTXE"
-    url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=#{abbrev}&interval=5min&apikey=#{key}"
+    url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=#{abbrev}&interval=#{interval}&apikey=#{key}"
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     #IO.inspect(data)
-    IO.puts("Time Series (#{time})")
-    %{metadata: data["Meta Data"], prices: data["Time Series (#{time})"]}
+    IO.puts("Time Series (#{interval})")
+    %{metadata: data["Meta Data"], prices: data["Time Series (#{interval})"]}
   end
 end
