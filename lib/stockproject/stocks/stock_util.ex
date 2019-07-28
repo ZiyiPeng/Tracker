@@ -3,12 +3,12 @@ defmodule StockUtil do
   # if the IPO is atleast 2 years ago, use stdev of annual rate of Returns
   # if not enough data points can be found, use stdev of closing prices
   def calc_return_fluctuation(abbreviation) do
-    token=Application.fetch_env!(:stockproject, :iex_token)
-    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/2y?token=#{token}"
-    IO.puts(url)
-    resp = HTTPoison.get!(url)
-    data = Jason.decode!(resp.body)
-    closes = Enum.map(data, fn x -> x["close"] end)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/2y"
+    key = %{abbrev: "#{abbreviation}", type: "history", time_span: "2y"}
+    data = CacheUtil.get_or_search(key, url)
+    IO.inspect(data)
+    closes = Enum.map(data, fn x -> x.close end)
+    IO.inspect(closes)
     if length(closes) > 253 do
       IO.puts("valid")
       data = chunk_data(closes)
@@ -27,21 +27,20 @@ defmodule StockUtil do
 
   def calc_price_fluctuation(abbreviation) do
     token=Application.fetch_env!(:stockproject, :iex_token)
-    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/1y?token=#{token}"
-    resp = HTTPoison.get!(url)
-    data = Jason.decode!(resp.body)
-    close = Enum.map(data, fn x -> x["close"] end)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/1y"
+    key = %{abbrev: "#{abbreviation}", type: "history", time_span: "1y"}
+    data = CacheUtil.get_or_search(key, url)
+    close = Enum.map(data, fn x -> x.close end)
     risk = Float.round(Statistics.stdev(close), 4)
     risk
   end
 
-  def get_annual_ror(abbrev) do
-    token=Application.fetch_env!(:stockproject, :iex_token)
-    url = "https://cloud.iexapis.com/stable/stock/#{abbrev}/chart/2y?token=#{token}"
-    resp = HTTPoison.get!(url)
-    data = Jason.decode!(resp.body)
+  def get_annual_ror(abbreviation) do
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/2y"
+    key = %{abbrev: "#{abbreviation}", type: "history", time_span: "2y"}
+    data = CacheUtil.get_or_search(key, url)
     #start idx of second year data
-    closes = Enum.map(data, fn x -> x["close"] end)
+    closes = Enum.map(data, fn x -> x.close end)
     if length(closes) > 500 do
       data = chunk_data(closes)
       divisor = length(hd(data))
@@ -51,7 +50,7 @@ defmodule StockUtil do
     #some company's IPO is within 1 year
     else
       IO.puts("get_annual_change(abbrev)")
-      get_annual_change(abbrev)
+      get_annual_change(abbreviation)
     end
   end
 
@@ -64,12 +63,11 @@ defmodule StockUtil do
     acc
   end
 
-  def get_list_of_ror(abbrev) do
-    token=Application.fetch_env!(:stockproject, :iex_token)
-    url = "https://cloud.iexapis.com/stable/stock/#{abbrev}/chart/2y?token=#{token}"
-    resp = HTTPoison.get!(url)
-    data = Jason.decode!(resp.body)
-    closes = Enum.map(data, fn x -> x["close"] end)
+  def get_list_of_ror(abbreviation) do
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/2y"
+    key = %{abbrev: "#{abbreviation}", type: "history", time_span: "2y"}
+    data = CacheUtil.get_or_search(key, url)
+    closes = Enum.map(data, fn x -> x.close end)
     data = chunk_data(closes)
     divisor = length(hd(data))
     returns = prep_list_return(Enum.fetch!(data,0), Enum.fetch!(data,1), [], divisor)
@@ -85,11 +83,10 @@ defmodule StockUtil do
 
   #get the average annual rate of return
   def get_annual_change(abbreviation) do
-    token=Application.fetch_env!(:stockproject, :iex_token)
-    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/stats?token=#{token}"
-    resp = HTTPoison.get!(url)
-    data = Jason.decode!(resp.body)
-    ror=data["year1ChangePercent"]
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/stats"
+    key = %{abbrev: "#{abbreviation}", type: "stats", time_span: "1y"}
+    data = CacheUtil.get_or_search(key, url)
+    ror=data.year1ChangePercent
     Float.round(ror, 5)
   end
 
@@ -110,10 +107,10 @@ defmodule StockUtil do
 #get stock's beta and name
   def get_info(abbreviation) do
     token=Application.fetch_env!(:stockproject, :iex_token)
-    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/stats?token=#{token}"
-    resp = HTTPoison.get!(url)
-    stat = Jason.decode!(resp.body)
-    %{beta: stat["beta"], name: stat["companyName"]}
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/stats"
+    key = %{abbrev: "#{abbreviation}", type: "stats", time_span: "1y"}
+    data = CacheUtil.get_or_search(key, url)
+    %{beta: data.beta, name: data.companyName}
   end
 
   def get_logo(abbrev) do
@@ -123,20 +120,20 @@ defmodule StockUtil do
     data["url"]
   end
 
-  def get_current_price(abbrev) do
+  def get_current_price(abbreviation) do
     token=Application.fetch_env!(:stockproject, :iex_token)
-    url = "https://cloud.iexapis.com/stable/stock/#{abbrev}/quote?token=#{token}"
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/quote?token=#{token}"
     resp = HTTPoison.get!(url)
     data=Jason.decode!(resp.body)
     data["latestPrice"]
   end
 
-  def get_history(abbrev, time_span) do
+  def get_history(abbreviation, time_span) do
     token=Application.fetch_env!(:stockproject, :iex_token)
-    url = "https://cloud.iexapis.com/stable/stock/#{abbrev}/chart/#{time_span}?token=#{token}"
-    resp = HTTPoison.get!(url)
-    data = Jason.decode!(resp.body)
-    Enum.map(data, fn x -> %{close: x["close"], date: x["date"]} end)
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/#{time_span}"
+    key = %{abbrev: "#{abbreviation}", type: "history", time_span: "#{time_span}"}
+    data = CacheUtil.get_or_search(key, url)
+    Enum.map(data, fn x -> %{close: x.close, date: x.date} end)
   end
 
   def search_suggestion(name) do
@@ -149,9 +146,9 @@ defmodule StockUtil do
 
 #%{metadata: data.meta, price: data.price}
 #interval: 1min, 5min, 15min, 30min, 60min
-  def search_intraday(abbrev, interval) do
+  def search_intraday(abbreviation, interval) do
     key = "7E3XEF8EJVICCTXE"
-    url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=#{abbrev}&interval=#{interval}&apikey=#{key}"
+    url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=#{abbreviation}&interval=#{interval}&apikey=#{key}"
     resp = HTTPoison.get!(url)
     data = Jason.decode!(resp.body)
     #IO.inspect(data)

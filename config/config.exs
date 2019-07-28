@@ -24,7 +24,7 @@ config :logger, :console,
 
 # Configuration for nebulex cache
 config :stockproject, Stockproject.Cache,
-  gc_interval: 86_400 # 24 hrs
+  gc_interval: 604800 # 1 week = 604800 second
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
