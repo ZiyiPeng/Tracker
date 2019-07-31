@@ -32,20 +32,20 @@ defmodule Stockproject.Stocks do
     if target do
       if need_update(target) do
         price_fluc = StockUtil.calc_price_fluctuation(abbrev)
-        return_fluc = StockUtil.calc_return_fluctuation(abbrev)
+        risk = StockUtil.calc_return_fluctuation(abbrev)
         ror = StockUtil.get_annual_ror(abbrev)
         %{beta: beta, name: name} = StockUtil.get_info(abbrev)
-        update_stock(target, %{price_fluc: price_fluc, return_fluc: return_fluc, beta: beta, rate_of_return: ror, name: name, modified_date: DateTime.utc_now()})
+        update_stock(target, %{price_fluc: price_fluc, risk: risk, beta: beta, rate_of_return: ror, name: name, modified_date: DateTime.utc_now()})
       else
         target
       end
     else
       IO.puts("reached")
       price_fluc = StockUtil.calc_price_fluctuation(abbrev)
-      return_fluc = StockUtil.calc_return_fluctuation(abbrev)
+      risk = StockUtil.calc_return_fluctuation(abbrev)
       ror = StockUtil.get_annual_ror(abbrev)
       %{beta: beta, name: name} = StockUtil.get_info(abbrev)
-      create_stock(%{name: name, beta: beta, rate_of_return: ror, price_fluc: price_fluc, return_fluc: return_fluc, abbreviation: abbrev, modified_date: DateTime.utc_now()})
+      create_stock(%{name: name, beta: beta, rate_of_return: ror, price_fluc: price_fluc, risk: risk, abbreviation: abbrev, modified_date: DateTime.utc_now()})
     end
   end
 

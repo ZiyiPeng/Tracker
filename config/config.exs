@@ -26,6 +26,9 @@ config :logger, :console,
 config :stockproject, Stockproject.Cache,
   gc_interval: 604800 # 1 week = 604800 second
 
+config :stockproject, Stockproject.CompanyInfoCache,
+  gc_interval: 604800 # 1 week = 604800 second
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

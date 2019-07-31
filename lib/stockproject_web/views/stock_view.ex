@@ -15,7 +15,7 @@ defmodule StockprojectWeb.StockView do
       name: stock.name,
       abbreviation: stock.abbreviation,
       price_fluc: stock.price_fluc,
-      return_fluc: stock.return_fluc,
+      risk: stock.risk,
       rate_of_return: stock.rate_of_return,
       beta: stock.beta,
       modified_date: stock.modified_date}
@@ -29,7 +29,7 @@ defmodule StockprojectWeb.StockView do
        sector: company.sector,
        symbol: company.symbol,
        website: company.website,
-       logo: logo
+       logo: logo.logo
      }
   end
 
@@ -38,7 +38,7 @@ defmodule StockprojectWeb.StockView do
     %{history: histories}
   end
 
-  def render("seggestion.json", %{suggestions: suggestions}) do
+  def render("suggestion.json", %{suggestions: suggestions}) do
     %{best_matches: suggestions}
   end
 

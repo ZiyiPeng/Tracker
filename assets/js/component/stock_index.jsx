@@ -67,8 +67,8 @@ function RenderStockStat(props) {
       <li>Company Name: {stat.name}</li>
       <li>Abbreviation: {stat.abbreviation}</li>
       <li>Beta: {stat.beta}</li>
-      <li>price flucuation: {stat.price_fluc}%</li>
-      <li>return fluctuation: {stat.return_fluc}%</li>
+      <li>price flucuation: {stat.price_fluc}$</li>
+      <li>risk: {stat.risk*100}%</li>
       <li>Average Annual Return: {Math.round(stat.rate_of_return * 100*100)/100}%</li>
       <li><Link to={"/stock_company"} onClick={()=>api.get_company(props.stock.abbreviation)}>Company Info</Link></li>
     </ul>
@@ -150,7 +150,7 @@ function render_graph(stock) {
 }
 
 function get_suggestsions(input){
-  $.ajax(`http://analysis.zy-peng.com/api/stock_search?input=${input}`, {
+  $.ajax(`hhttp://localhost:4000/api/stock_search?input=${input}`, {
   method: "get",
   dataType: "json",
   contentType: "application/json; charset=UTF-8",
@@ -166,7 +166,7 @@ function get_suggestsions(input){
 }
 
 function render_stock_history(abbrev, time) {
-  $.ajax(`http://analysis.zy-peng.com/api/stock_history?abbreviation=${abbrev}&time-span=${time}`, {
+  $.ajax(`http://localhost:4000/api/stock_history?abbreviation=${abbrev}&time-span=${time}`, {
   method: "get",
   dataType: "json",
   contentType: "application/json; charset=UTF-8",
@@ -179,7 +179,7 @@ function render_stock_history(abbrev, time) {
 }
 
 function render_intraday(abbrev, time) {
-  $.ajax(`http://analysis.zy-peng.com/api/stock_intraday?abbreviation=${abbrev}&time-span=${time}`, {
+  $.ajax(`http://localhost:4000/api/stock_intraday?abbreviation=${abbrev}&time-span=${time}`, {
   method: "get",
   dataType: "json",
   contentType: "application/json; charset=UTF-8",

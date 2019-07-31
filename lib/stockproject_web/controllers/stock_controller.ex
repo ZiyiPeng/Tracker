@@ -47,7 +47,7 @@ defmodule StockprojectWeb.StockController do
   end
 
   def look_up_company(conn, %{"abbreviation" => ab}) do
-    result = Stoxir.company(ab)
+    result = StockUtil.get_company_info(ab)
     logo = StockUtil.get_logo(ab)
     render(conn, "company.json", company: result, logo: logo)
   end
@@ -66,7 +66,7 @@ defmodule StockprojectWeb.StockController do
 
   def get_suggestions(conn, %{"input" => name}) do
     suggestions = StockUtil.search_suggestion(name)
-    render(conn, "seggestion.json", suggestions: suggestions)
+    render(conn, "suggestion.json", suggestions: suggestions)
   end
 
   # time span has to be one of 1min, 5min, 15min, 30min, 60min

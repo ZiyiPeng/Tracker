@@ -12,6 +12,7 @@ defmodule Stockproject.Application do
     children = [
       # Start the nebulex Cache
       supervisor(Stockproject.Cache, []),
+      supervisor(Stockproject.CompanyInfoCache, []),
       # Start the Ecto repository
       Stockproject.Repo,
       # Start the endpoint when the application starts

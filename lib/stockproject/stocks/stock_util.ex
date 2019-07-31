@@ -26,7 +26,6 @@ defmodule StockUtil do
   end
 
   def calc_price_fluctuation(abbreviation) do
-    token=Application.fetch_env!(:stockproject, :iex_token)
     url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/1y"
     key = %{abbrev: "#{abbreviation}", type: "history", time_span: "1y"}
     data = CacheUtil.get_or_search(key, url)
@@ -71,11 +70,12 @@ defmodule StockUtil do
     data = chunk_data(closes)
     divisor = length(hd(data))
     returns = prep_list_return(Enum.fetch!(data,0), Enum.fetch!(data,1), [], divisor)
-    if length(closes) >= 505 do
+    IO.puts(length(closes))
+    if length(closes) >= 500 do
       IO.puts("valid")
       returns
     else
-      number_of_data_point = max(0, length(closes)-253)
+      number_of_data_point = max(0, length(closes)-252)
       IO.puts("invalid")
       Enum.take(returns, -number_of_data_point)
     end
@@ -113,11 +113,16 @@ defmodule StockUtil do
     %{beta: data.beta, name: data.companyName}
   end
 
-  def get_logo(abbrev) do
-    token=Application.fetch_env!(:stockproject, :iex_token)
-    resp = HTTPoison.get!("https://cloud.iexapis.com/stable/stock/#{abbrev}/logo?token=#{token}")
-    data = Jason.decode!(resp.body)
-    data["url"]
+  def get_company_info(abbreviation) do
+    info_url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/company"
+    info_key = %{abbrev: "#{abbreviation}", type: "company_info"}
+    CacheUtil.get_or_search(info_key, info_url)
+  end
+
+  def get_logo(abbreviation) do
+    logo_url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/logo"
+    logo_key = %{abbrev: "#{abbreviation}", type: "logo"}
+    CacheUtil.get_or_search(logo_key, logo_url)
   end
 
   def get_current_price(abbreviation) do
