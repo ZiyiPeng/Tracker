@@ -30,3 +30,6 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   *Status:
      Web application is no longer available. All endpoints except /api/stat and /api/logo are still functioning. 
      We will restore the application once the caching feature is finished
+     
+ 09/14/2019
+ 1. updated code is on dev branch
