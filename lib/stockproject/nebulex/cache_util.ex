@@ -18,7 +18,7 @@ defmodule CacheUtil do
         %{logo: data["url"]}
     end
   end
-
+  
   # return the cache associated with the given key
   def determine_cache(key) do
     type = Map.fetch!(key, :type)

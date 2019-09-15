@@ -34,6 +34,15 @@ defmodule StockUtil do
     risk
   end
 
+  def cacl_mean_price(abbreviation) do
+    url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/1y"
+    key = %{abbrev: "#{abbreviation}", type: "history", time_span: "1y"}
+    data = CacheUtil.get_or_search(key, url)
+    close = Enum.map(data, fn x -> x.close end)
+    risk = Float.round(Statistics.mean(close), 4)
+    risk
+  end
+
   def get_annual_ror(abbreviation) do
     url = "https://cloud.iexapis.com/stable/stock/#{abbreviation}/chart/2y"
     key = %{abbrev: "#{abbreviation}", type: "history", time_span: "2y"}
@@ -68,6 +77,7 @@ defmodule StockUtil do
     data = CacheUtil.get_or_search(key, url)
     closes = Enum.map(data, fn x -> x.close end)
     data = chunk_data(closes)
+    IO.inspect(data)
     divisor = length(hd(data))
     returns = prep_list_return(Enum.fetch!(data,0), Enum.fetch!(data,1), [], divisor)
     IO.puts(length(closes))
